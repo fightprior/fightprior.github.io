@@ -1,0 +1,22 @@
+# Permalinks
+#
+# Use of `relative_permalinks` ensures post links from the index work properly.
+permalink:           pretty
+
+# Setup
+title:               Fight Prior
+tagline:             'MMA Data Science and Statistical Analysis'
+description:         'Prior to the Fight: Mixed Martial Arts Data Science and Statistical Analysis'
+url:                 http://www.fightprior.com/
+baseurl:             ''
+paginate:            5
+gems:                [jekyll-paginate]
+
+# About/contact
+author:
+  name:              Sean Hackett and John D. Storey
+  url:               http://shackett.github.io/ and http://jdstorey.github.io/
+  email:             TBD
+
+# Custom vars
+version:             1.0.0
