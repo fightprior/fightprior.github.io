@@ -1,9 +1,8 @@
 ---
 layout: page
-title: About
 ---
 
-### Our Goal
+## Our Goal
 
 Our goal is to better understand the factors that differentiate fighters. When two fighters enter the ring, anything can happen. Nevertheless, the likely outcome of a fight is largely determined by each fighters' past performances and training, as well as broader-trends in the sport as a whole. We chose the name "Fight Prior" to reflect that a fight's outcome is determine not only on fight night, but also by the the fight's prior: the history leading up to the bout.
 
@@ -18,15 +17,15 @@ Our current focus areas are:
 - Quantifying fighter demographics and styles
 
 
-### People
+## People
 
-Fight Prior was created and is edited by Sean Hackett and John Storey.  Sean has a purple belt in Brazillian Jiu-Jitsu and a PhD in Quantitative and Computational Biology. ... John is ...
+Fight Prior was created and is edited by [Sean Hackett](http://shackett.github.io/) and John Storey.  Sean has a purple belt in Brazillian Jiu-Jitsu and a PhD in Quantitative and Computational Biology. ... John is ...
 
-### Why *Fight Prior*
+## Why *Fight Prior*
 
 There has been an explosion of both interest and participation in MMA to the extent that the field can now be considered a "big data" problem. We, the authors, want to bring tools from data science that have revolutionized other fields into this space.
 
-### Disclaimer 
+## Disclaimer 
 
 The data analyses and views published here are our own; they do not represent those of our employers or funding agencies.
 
