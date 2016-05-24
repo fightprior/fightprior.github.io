@@ -7,7 +7,7 @@ permalink:           pretty
 title:               Fight Prior
 tagline:             'MMA Data Science and Statistical Analysis'
 description:         'Prior to the Fight: Mixed Martial Arts Data Science and Statistical Analysis'
-url:                 http://www.fightprior.com/
+url:                 'http://www.fightprior.com'
 baseurl:             ''
 paginate:            5
 gems:                [jekyll-paginate]

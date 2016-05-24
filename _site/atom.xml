@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
  <title>Fight Prior</title>
- <link href="http://www.fightprior.com//atom.xml" rel="self"/>
- <link href="http://www.fightprior.com//"/>
- <updated>2016-05-23T10:59:33-04:00</updated>
- <id>http://www.fightprior.com/</id>
+ <link href="http://www.fightprior.com/atom.xml" rel="self"/>
+ <link href="http://www.fightprior.com/"/>
+ <updated>2016-05-23T23:20:34-04:00</updated>
+ <id>http://www.fightprior.com</id>
  <author>
    <name>Sean Hackett and John D. Storey</name>
    <email>TBD</email>
@@ -13,10 +13,345 @@
 
  
  <entry>
+   <title>Building a large database of MMA fight results II: quantitatively summarizing over 240,000 MMA fights</title>
+   <link href="http://www.fightprior.com/mma/2016/05/05/summarizingFights/"/>
+   <updated>2016-05-05T00:00:00-04:00</updated>
+   <id>http://www.fightprior.com/mma/2016/05/05/summarizingFights</id>
+   <content type="html">&lt;p&gt;In my &lt;a href=&quot;https://shackett.github.io/mma/scrapingMMA&quot;&gt;last post&lt;/a&gt;, I discussed how it was possible to extract match-level summaries of more than 240,000 unique MMA bouts between 143,602 fighters. In this entry, I will discuss how data from individual webpages can be combined into a single table with comparable entries. I will then show some high-leve&lt;/p&gt;
+
+&lt;p&gt;Data from fighters was obtained one webpage at a time, with the fields from one website saved as elements of a list. The fields that we want to work with for the first fighter in this list, Andrei Arlovski, are:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;&lt;span class=&quot;n&quot;&gt;load&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;~/Desktop/MMA/software/data/raw_fight_data/fighter_output.Rdata&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;fighter_output&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;query&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;## [1] &quot;/fighter/Andrei-Arlovski-270&quot;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;&lt;span class=&quot;n&quot;&gt;kable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fighter_output&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;vital_stats&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;row.names&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;FALSE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;Name&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;Nickname&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;Birthday&lt;/th&gt;
+      &lt;th style=&quot;text-align: right&quot;&gt;Height&lt;/th&gt;
+      &lt;th style=&quot;text-align: right&quot;&gt;Weight&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;nationality&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;weight_class&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;camp&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Andrei Arlovski&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;The Pit Bull&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;1979-02-04&lt;/td&gt;
+      &lt;td style=&quot;text-align: right&quot;&gt;193.04&lt;/td&gt;
+      &lt;td style=&quot;text-align: right&quot;&gt;109.32&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Belarus&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Heavyweight&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Jackson-Wink MMA&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;&lt;span class=&quot;n&quot;&gt;kable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;head&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fighter_output&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;opponents&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;row.names&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;FALSE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;Result&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;Fighter&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;Event&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;Method&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;Finish&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;Referee&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;R&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;Time&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;Tier&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;opponent_link&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;event_link&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;Date&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;loss&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Stipe Miocic&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;UFC 195 - Lawler vs. Condit&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;TKO&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Punches&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Herb Dean&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;1&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;0:54&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Pro&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;/fighter/Stipe-Miocic-39537&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;/events/UFC-195-Lawler-vs-Condit-47465&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;2016-01-02&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;win&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Frank Mir&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;UFC 191 - Johnson vs. Dodson 2&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Decision&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Unanimous&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;John McCarthy&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;3&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;5:00&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Pro&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;/fighter/Frank-Mir-2329&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;/events/UFC-191-Johnson-vs-Dodson-2-42229&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;2015-09-05&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;win&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Travis Browne&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;UFC 187 - Johnson vs. Cormier&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;TKO&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Punches&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Mark Smith&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;1&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;4:41&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Pro&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;/fighter/Travis-Browne-16785&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;/events/UFC-187-Johnson-vs-Cormier-42199&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;2015-05-23&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;win&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Antonio Silva&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;UFC Fight Night 51 - Bigfoot vs. Arlovski 2&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;KO&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Punches&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Jerin Valel&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;1&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;2:59&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Pro&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;/fighter/Antonio-Silva-12354&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;/events/UFC-Fight-Night-51-Bigfoot-vs-Arlovski-2-37743&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;2014-09-13&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;win&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Brendan Schaub&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;UFC 174 - Johnson vs. Bagautinov&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Decision&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Split&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;John McCarthy&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;3&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;5:00&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Pro&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;/fighter/Brendan-Schaub-33926&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;/events/UFC-174-Johnson-vs-Bagautinov-35505&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;2014-06-14&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;win&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Andreas Kraniotakes&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Fight Nights - Battle on Nyamiha&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;TKO&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Punches&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;NA&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;2&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;3:14&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Pro&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;/fighter/Andreas-Kraniotakes-30848&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;/events/Fight-Nights-Battle-on-Nyamiha-33655&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;2013-11-29&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;We can see that most of the match data is in the “opponents” entries, but this table is missing data from Andrei himself. In order to make use of this table, we will need to add an entry for Andrei’s name. Also, while Andrei Arlovski is a fairly distinctive name, not all MMA fighters will have unique names. In fact, there are 15 distinct Chris Smiths in our dataset and 17 Rafael Silvas! Since we will want to uniquely match fighters to their bouts, each fighter needs a unique identifier. Because each fighter has a unique webpage, these urls can be used as unique indicators.&lt;/p&gt;
+
+&lt;p&gt;To summarize each individual fighter’s matches, we can add the fighter’s url and name to his/her matches. Because the fields in all individual fighters’ tables will match, we can stack each fighter’s fight data to generate a table of all fights.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;&lt;span class=&quot;n&quot;&gt;all_bouts&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; 
+  &lt;span class=&quot;c1&quot;&gt;# generate a list of tables: each fighter-specific entry has the fighter link,
+&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;# fighter name and all bouts
+&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;lapply&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fighter_output&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;data.frame&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Query&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;query&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;vital_stats&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;opponents&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;})&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;# stack the tables in each list entry 
+&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;bind_rows&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;# convert to a tbl_df for nicer displays
+&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;tbl_df&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Now that we have aggregated data from all bouts into a single table we can start an exploratory analysis, but before we start interpreting this large raw dataset some cleanup may be necessary. Going forward, we will likely care about who fought, who won, and how they won. These first two questions are pretty straight forward, but there are lots of ways in which a fighter can win and the summary is often subjective. The two fields that address how a fight was won are the method of victory (such as Decision or KO) and the finish (a more specific indicator of the finishing-move such as by Armbar, Punches or Hadouken). Both of these fields need some processing: there are 99 unique methods in this dataset when only 7 unique methods are usually recognized. The rest of the variations are either misspelled, alternative terms or an irrelevant entry. Similarly there are 1185 unique finishes present including many rare finishes like “vomiting” or “injured falling through ropes.” To make better use of methods and finishes we can combine rare fields to generate a more informative core set.&lt;/p&gt;
+
+&lt;h3 id=&quot;cleaning-up-methods&quot;&gt;Cleaning up methods&lt;/h3&gt;
+
+&lt;p&gt;There are 99 unique methods in this dataset: some fields are correct as written such as submission and TKO, others are alternative words such as “No Contest” and “NC”, while many variations are misspellings of correct terms.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;&lt;span class=&quot;n&quot;&gt;all_methods&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;all_bouts&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;# count unique instances of each method
+&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Method&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;# arrange methods by frequency
+&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;arrange&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;desc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;# generate a slot to
+&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;mutate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Method_overwrite&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NA&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;kable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;head&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;all_methods&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;row.names&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;F&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;Method&lt;/th&gt;
+      &lt;th style=&quot;text-align: right&quot;&gt;n&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;Method_overwrite&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Submission&lt;/td&gt;
+      &lt;td style=&quot;text-align: right&quot;&gt;197076&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;NA&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;TKO&lt;/td&gt;
+      &lt;td style=&quot;text-align: right&quot;&gt;121143&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;NA&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Decision&lt;/td&gt;
+      &lt;td style=&quot;text-align: right&quot;&gt;103403&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;NA&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;KO&lt;/td&gt;
+      &lt;td style=&quot;text-align: right&quot;&gt;34558&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;NA&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;NA&lt;/td&gt;
+      &lt;td style=&quot;text-align: right&quot;&gt;12076&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;NA&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Draw&lt;/td&gt;
+      &lt;td style=&quot;text-align: right&quot;&gt;8916&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;NA&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;To reduce the methods to a set of essential terms: we can first flag correct terms and alternative spellings, then determine whether any other terms are similar to these entries. We then combine alternative terms and discard terms that don’t match to anything (these are terms that make no sense like “Shane Garrett”).&lt;/p&gt;
+
+&lt;p&gt;To identify misspellings, we can use approximate string matching. Starting with each “correct” term and a list of unmatched terms, we determine how many insertions, deletions or substitutions of letters are needed to generate each unmatched term (note: insertions are not as strictly penalized because many methods contain a note such “No Contest - Overturned by NSAC”). If the score is below a threshold, the two strings approximately match and can be combined.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;&lt;span class=&quot;c1&quot;&gt;# accurate terms and alternative names
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;primary_fields&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;all_methods&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Method&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;12&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# transformation costs
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;match_costs&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;insertions&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;deletions&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;substitutions&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a_field&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rev&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;primary_fields&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;is.na&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;primary_fields&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)])){&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;all_methods&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Method_overwrite&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;agrep&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a_field&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;all_methods&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Method&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ignore.case&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;costs&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;match_costs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;max.distance&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0.2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a_field&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# Combine similar categories
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;all_methods&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Method_overwrite&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;grep&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;No Decision&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;all_methods&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Method&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;NC&quot;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;all_methods&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Method_overwrite&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;grep&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;No Contest&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;all_methods&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Method&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;NC&quot;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;all_methods&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Method_overwrite&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;all_methods&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Method_overwrite&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Disqualification&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;DQ&quot;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;all_methods&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Method_overwrite&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;all_methods&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Method_overwrite&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;No Contest&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;NC&quot;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;all_methods&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Method_overwrite&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;all_methods&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Method&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Unknown&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;NA&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;all_methods&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Method_overwrite&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;all_methods&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Method&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Points&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Decision&quot;&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;table&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;all_methods&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Method_overwrite&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;## 
+##   Decision         DQ       Draw         KO         NC Submission 
+##          8          3          2          6         27         15 
+##        TKO 
+##          2&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Using fuzzy string matching and a couple of rules to combine categories we can reduce combine 63 of the 99 reported methods into 7 essential categories.&lt;/p&gt;
+
+&lt;h3 id=&quot;cleaning-up-finishes&quot;&gt;Cleaning up finishes&lt;/h3&gt;
+
+&lt;p&gt;The problem of reducing the 1185 distinct finishes to an essential subset is considerably more challenging than condensing methods was. This primarily stems from three issues:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;There are a large number of categories.&lt;/li&gt;
+  &lt;li&gt;Most categories are accurately described, but may be too specific to be useful.&lt;/li&gt;
+  &lt;li&gt;Some categories are inconsistent (e.g. winning by a draw, no contest by punches).&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Because of the latter two issues and in spite of the first issue, categories were manually combined into a focused and consistent subset of finishes.&lt;/p&gt;
+
+&lt;p&gt;Aggregating categories is a bit of an art. It would be difficult to identify trends in categories that were too small (&amp;lt;100 instances), while categories that were too large might end up lumping together fundamentally different finishes. Taking the many categories of chokes as an example, some chokes are common and remained their own category (e.g. Triangle, Arm-Triangle, RNC, and Guillotine Choke), while uncommon chokes were either combined into a more general “Choke” category (e.g Crucifex and Peruvian Necktie) or combined with similar chokes (e.g. Flying Triangle to Triangle, Bulldog to Guillotine).&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;&lt;span class=&quot;n&quot;&gt;all_finishes&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;all_bouts&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;# count all unique combinations of method and finish
+&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Method&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Finish&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;# convert methods to consensus methods
+&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;left_join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;all_methods&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;select&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;by&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Method&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;# recount
+&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Method_overwrite&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Finish&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;wt&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# load previously annotated categories
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;past_categories&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;read.delim&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;~/Desktop/MMA/software/data/annotations/Finish_categories.txt&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;tbl_df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;select&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Method_overwrite&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Finish&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;specific&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;unique&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;all_finishes&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;all_finishes&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;# join previously annotated categories to current methods and finishes
+&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;left_join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;past_categories&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;by&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Finish&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Method_overwrite&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;rename&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Finish_overwrite&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;specific&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;ungroup&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;arrange&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Method_overwrite&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Finish&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;all_results&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;all_bouts&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;select&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Result&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Finish&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Result&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Method&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Finish&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;left_join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;all_methods&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;select&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;by&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Method&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;left_join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;all_finishes&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;select&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;by&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Method_overwrite&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Finish&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Result&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Method_overwrite&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Finish_overwrite&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;wt&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h3 id=&quot;summary-of-methods-and-finishes&quot;&gt;Summary of methods and finishes&lt;/h3&gt;
+
+&lt;p&gt;To visualize the frequency of methods and finishes, I will use treemaps generated using the &lt;a href=&quot;https://cran.r-project.org/web/packages/treemap/index.html&quot;&gt;treemap&lt;/a&gt; R package. A treemap visualizes the frequency of categories based on the area of a rectangle that they occupy (a category at 25% will occupy 25% of the total area). One nice feature about treemaps is that they can easily display hierarchical information. This won’t be useful for methods, but finishes can be grouped into subcategories to improve visualization.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;&lt;span class=&quot;n&quot;&gt;library&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;treemap&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;methods&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;finish_types&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;select&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Method&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Method_cleanup&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Method&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;wt&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;treemap&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;methods&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; 
+&lt;span class=&quot;n&quot;&gt;index&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Method&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;vSize&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;n&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;title&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Frequency of methods in MMA&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;fontsize.labels&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;15&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;&lt;img src=&quot;&#39;&#39;figure/source/2016-05-05-summarizingFights/unnamed-chunk-8-1.png&quot; title=&quot;plot of chunk unnamed-chunk-8&quot; alt=&quot;plot of chunk unnamed-chunk-8&quot; style=&quot;display: block; margin: auto;&quot; /&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;&lt;span class=&quot;n&quot;&gt;finishes&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;finish_types&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;select&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Category&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;General_finish&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Finish&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Finish_cleanup&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Category&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Finish&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;wt&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;treemap&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;finishes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; 
+&lt;span class=&quot;n&quot;&gt;index&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Category&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Finish&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;vSize&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;n&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;title&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Frequency of finishes in MMA&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;fontsize.labels&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;15&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;&lt;img src=&quot;&#39;&#39;figure/source/2016-05-05-summarizingFights/unnamed-chunk-9-1.png&quot; title=&quot;plot of chunk unnamed-chunk-9&quot; alt=&quot;plot of chunk unnamed-chunk-9&quot; style=&quot;display: block; margin: auto;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;By visualizing finishes, we can see that the majority of finishes fall into a relatively small number of categories. The most common specific finishes were punches (a massive category that was split into TKO, KO and submission to provide some resolution), unanimous decision and three major submissions (Armbar, RNC and Guillotine). The most common classes of finishes were punches, followed by chokes and then decision. The fourth largest class was essentially miscellaneous finishes, a class that primarily pertains to fights where a specific finish was not recorded.&lt;/p&gt;
+
+&lt;p&gt;Now that we have cleaned up the results of our MMA matches, in my next post, I will discuss how we can clean up the data on individual fighters. This will help shed light on the demographics of MMA fighters, focusing on where MMA fighters live and the relative frequency of different weight classes.&lt;/p&gt;
+
+&lt;p&gt;Stay tuned, because in a couple weeks, I will revisit this finishes dataset. In this post, we grouped all wins into 50 well-defined categories. Individual fighters do not tend to use all types of finishes but tend to specialize in a subset of correlated finishes. Looking at the cooccurence of pairs of finishes, we can get a high level picture of the major MMA styles.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
    <title>Placeholder Post</title>
-   <link href="http://www.fightprior.com//2016/01/02/introducing-lanyon/"/>
+   <link href="http://www.fightprior.com/2016/01/02/placeholder-post/"/>
    <updated>2016-01-02T00:00:00-05:00</updated>
-   <id>http://www.fightprior.com//2016/01/02/introducing-lanyon</id>
+   <id>http://www.fightprior.com/2016/01/02/placeholder-post</id>
    <content type="html">&lt;p&gt;This is a placeholder post.&lt;/p&gt;
 </content>
  </entry>

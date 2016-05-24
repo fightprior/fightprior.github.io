@@ -98,7 +98,346 @@
   
   <div class="post">
     <h1 class="post-title">
-      <a href="//2016/01/02/introducing-lanyon/">
+      <a href="http://www.fightprior.com/mma/2016/05/05/summarizingFights/">
+        Building a large database of MMA fight results II: quantitatively summarizing over 240,000 MMA fights
+      </a>
+    </h1>
+
+    <span class="post-date">05 May 2016</span>
+
+    <p>In my <a href="https://shackett.github.io/mma/scrapingMMA">last post</a>, I discussed how it was possible to extract match-level summaries of more than 240,000 unique MMA bouts between 143,602 fighters. In this entry, I will discuss how data from individual webpages can be combined into a single table with comparable entries. I will then show some high-leve</p>
+
+<p>Data from fighters was obtained one webpage at a time, with the fields from one website saved as elements of a list. The fields that we want to work with for the first fighter in this list, Andrei Arlovski, are:</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">load</span><span class="p">(</span><span class="s2">"~/Desktop/MMA/software/data/raw_fight_data/fighter_output.Rdata"</span><span class="p">)</span>
+
+<span class="n">fighter_output</span><span class="p">[[</span><span class="m">1</span><span class="p">]]</span><span class="o">$</span><span class="n">query</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## [1] "/fighter/Andrei-Arlovski-270"</code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">kable</span><span class="p">(</span><span class="n">fighter_output</span><span class="p">[[</span><span class="m">1</span><span class="p">]]</span><span class="o">$</span><span class="n">vital_stats</span><span class="p">,</span> <span class="n">row.names</span><span class="o">=</span><span class="n">FALSE</span><span class="p">)</span></code></pre></figure>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Nickname</th>
+      <th style="text-align: left">Birthday</th>
+      <th style="text-align: right">Height</th>
+      <th style="text-align: right">Weight</th>
+      <th style="text-align: left">nationality</th>
+      <th style="text-align: left">weight_class</th>
+      <th style="text-align: left">camp</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Andrei Arlovski</td>
+      <td style="text-align: left">The Pit Bull</td>
+      <td style="text-align: left">1979-02-04</td>
+      <td style="text-align: right">193.04</td>
+      <td style="text-align: right">109.32</td>
+      <td style="text-align: left">Belarus</td>
+      <td style="text-align: left">Heavyweight</td>
+      <td style="text-align: left">Jackson-Wink MMA</td>
+    </tr>
+  </tbody>
+</table>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">kable</span><span class="p">(</span><span class="n">head</span><span class="p">(</span><span class="n">fighter_output</span><span class="p">[[</span><span class="m">1</span><span class="p">]]</span><span class="o">$</span><span class="n">opponents</span><span class="p">),</span> <span class="n">row.names</span><span class="o">=</span><span class="n">FALSE</span><span class="p">)</span></code></pre></figure>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Result</th>
+      <th style="text-align: left">Fighter</th>
+      <th style="text-align: left">Event</th>
+      <th style="text-align: left">Method</th>
+      <th style="text-align: left">Finish</th>
+      <th style="text-align: left">Referee</th>
+      <th style="text-align: left">R</th>
+      <th style="text-align: left">Time</th>
+      <th style="text-align: left">Tier</th>
+      <th style="text-align: left">opponent_link</th>
+      <th style="text-align: left">event_link</th>
+      <th style="text-align: left">Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">loss</td>
+      <td style="text-align: left">Stipe Miocic</td>
+      <td style="text-align: left">UFC 195 - Lawler vs. Condit</td>
+      <td style="text-align: left">TKO</td>
+      <td style="text-align: left">Punches</td>
+      <td style="text-align: left">Herb Dean</td>
+      <td style="text-align: left">1</td>
+      <td style="text-align: left">0:54</td>
+      <td style="text-align: left">Pro</td>
+      <td style="text-align: left">/fighter/Stipe-Miocic-39537</td>
+      <td style="text-align: left">/events/UFC-195-Lawler-vs-Condit-47465</td>
+      <td style="text-align: left">2016-01-02</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">win</td>
+      <td style="text-align: left">Frank Mir</td>
+      <td style="text-align: left">UFC 191 - Johnson vs. Dodson 2</td>
+      <td style="text-align: left">Decision</td>
+      <td style="text-align: left">Unanimous</td>
+      <td style="text-align: left">John McCarthy</td>
+      <td style="text-align: left">3</td>
+      <td style="text-align: left">5:00</td>
+      <td style="text-align: left">Pro</td>
+      <td style="text-align: left">/fighter/Frank-Mir-2329</td>
+      <td style="text-align: left">/events/UFC-191-Johnson-vs-Dodson-2-42229</td>
+      <td style="text-align: left">2015-09-05</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">win</td>
+      <td style="text-align: left">Travis Browne</td>
+      <td style="text-align: left">UFC 187 - Johnson vs. Cormier</td>
+      <td style="text-align: left">TKO</td>
+      <td style="text-align: left">Punches</td>
+      <td style="text-align: left">Mark Smith</td>
+      <td style="text-align: left">1</td>
+      <td style="text-align: left">4:41</td>
+      <td style="text-align: left">Pro</td>
+      <td style="text-align: left">/fighter/Travis-Browne-16785</td>
+      <td style="text-align: left">/events/UFC-187-Johnson-vs-Cormier-42199</td>
+      <td style="text-align: left">2015-05-23</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">win</td>
+      <td style="text-align: left">Antonio Silva</td>
+      <td style="text-align: left">UFC Fight Night 51 - Bigfoot vs. Arlovski 2</td>
+      <td style="text-align: left">KO</td>
+      <td style="text-align: left">Punches</td>
+      <td style="text-align: left">Jerin Valel</td>
+      <td style="text-align: left">1</td>
+      <td style="text-align: left">2:59</td>
+      <td style="text-align: left">Pro</td>
+      <td style="text-align: left">/fighter/Antonio-Silva-12354</td>
+      <td style="text-align: left">/events/UFC-Fight-Night-51-Bigfoot-vs-Arlovski-2-37743</td>
+      <td style="text-align: left">2014-09-13</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">win</td>
+      <td style="text-align: left">Brendan Schaub</td>
+      <td style="text-align: left">UFC 174 - Johnson vs. Bagautinov</td>
+      <td style="text-align: left">Decision</td>
+      <td style="text-align: left">Split</td>
+      <td style="text-align: left">John McCarthy</td>
+      <td style="text-align: left">3</td>
+      <td style="text-align: left">5:00</td>
+      <td style="text-align: left">Pro</td>
+      <td style="text-align: left">/fighter/Brendan-Schaub-33926</td>
+      <td style="text-align: left">/events/UFC-174-Johnson-vs-Bagautinov-35505</td>
+      <td style="text-align: left">2014-06-14</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">win</td>
+      <td style="text-align: left">Andreas Kraniotakes</td>
+      <td style="text-align: left">Fight Nights - Battle on Nyamiha</td>
+      <td style="text-align: left">TKO</td>
+      <td style="text-align: left">Punches</td>
+      <td style="text-align: left">NA</td>
+      <td style="text-align: left">2</td>
+      <td style="text-align: left">3:14</td>
+      <td style="text-align: left">Pro</td>
+      <td style="text-align: left">/fighter/Andreas-Kraniotakes-30848</td>
+      <td style="text-align: left">/events/Fight-Nights-Battle-on-Nyamiha-33655</td>
+      <td style="text-align: left">2013-11-29</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>We can see that most of the match data is in the “opponents” entries, but this table is missing data from Andrei himself. In order to make use of this table, we will need to add an entry for Andrei’s name. Also, while Andrei Arlovski is a fairly distinctive name, not all MMA fighters will have unique names. In fact, there are 15 distinct Chris Smiths in our dataset and 17 Rafael Silvas! Since we will want to uniquely match fighters to their bouts, each fighter needs a unique identifier. Because each fighter has a unique webpage, these urls can be used as unique indicators.</p>
+
+<p>To summarize each individual fighter’s matches, we can add the fighter’s url and name to his/her matches. Because the fields in all individual fighters’ tables will match, we can stack each fighter’s fight data to generate a table of all fights.</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">all_bouts</span> <span class="o">&lt;-</span> 
+  <span class="c1"># generate a list of tables: each fighter-specific entry has the fighter link,
+</span>  <span class="c1"># fighter name and all bouts
+</span>  <span class="n">lapply</span><span class="p">(</span><span class="n">fighter_output</span><span class="p">,</span> <span class="k">function</span><span class="p">(</span><span class="n">x</span><span class="p">){</span>
+  <span class="n">data.frame</span><span class="p">(</span><span class="n">Query</span> <span class="o">=</span> <span class="n">x</span><span class="o">$</span><span class="n">query</span><span class="p">,</span> <span class="n">Name</span> <span class="o">=</span> <span class="n">x</span><span class="o">$</span><span class="n">vital_stats</span><span class="o">$</span><span class="n">Name</span><span class="p">,</span> <span class="n">x</span><span class="o">$</span><span class="n">opponents</span><span class="p">)</span>
+  <span class="p">})</span> <span class="o">%&gt;%</span>
+  <span class="c1"># stack the tables in each list entry 
+</span>  <span class="n">bind_rows</span> <span class="o">%&gt;%</span>
+  <span class="c1"># convert to a tbl_df for nicer displays
+</span>  <span class="n">tbl_df</span></code></pre></figure>
+
+<p>Now that we have aggregated data from all bouts into a single table we can start an exploratory analysis, but before we start interpreting this large raw dataset some cleanup may be necessary. Going forward, we will likely care about who fought, who won, and how they won. These first two questions are pretty straight forward, but there are lots of ways in which a fighter can win and the summary is often subjective. The two fields that address how a fight was won are the method of victory (such as Decision or KO) and the finish (a more specific indicator of the finishing-move such as by Armbar, Punches or Hadouken). Both of these fields need some processing: there are 99 unique methods in this dataset when only 7 unique methods are usually recognized. The rest of the variations are either misspelled, alternative terms or an irrelevant entry. Similarly there are 1185 unique finishes present including many rare finishes like “vomiting” or “injured falling through ropes.” To make better use of methods and finishes we can combine rare fields to generate a more informative core set.</p>
+
+<h3 id="cleaning-up-methods">Cleaning up methods</h3>
+
+<p>There are 99 unique methods in this dataset: some fields are correct as written such as submission and TKO, others are alternative words such as “No Contest” and “NC”, while many variations are misspellings of correct terms.</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">all_methods</span> <span class="o">&lt;-</span> <span class="n">all_bouts</span> <span class="o">%&gt;%</span>
+  <span class="c1"># count unique instances of each method
+</span>  <span class="n">count</span><span class="p">(</span><span class="n">Method</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  <span class="c1"># arrange methods by frequency
+</span>  <span class="n">arrange</span><span class="p">(</span><span class="n">desc</span><span class="p">(</span><span class="n">n</span><span class="p">))</span> <span class="o">%&gt;%</span>
+  <span class="c1"># generate a slot to
+</span>  <span class="n">mutate</span><span class="p">(</span><span class="n">Method_overwrite</span> <span class="o">=</span> <span class="n">NA</span><span class="p">)</span>
+
+<span class="n">kable</span><span class="p">(</span><span class="n">head</span><span class="p">(</span><span class="n">all_methods</span><span class="p">),</span> <span class="n">row.names</span> <span class="o">=</span> <span class="n">F</span><span class="p">)</span></code></pre></figure>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Method</th>
+      <th style="text-align: right">n</th>
+      <th style="text-align: left">Method_overwrite</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Submission</td>
+      <td style="text-align: right">197076</td>
+      <td style="text-align: left">NA</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">TKO</td>
+      <td style="text-align: right">121143</td>
+      <td style="text-align: left">NA</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Decision</td>
+      <td style="text-align: right">103403</td>
+      <td style="text-align: left">NA</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">KO</td>
+      <td style="text-align: right">34558</td>
+      <td style="text-align: left">NA</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">NA</td>
+      <td style="text-align: right">12076</td>
+      <td style="text-align: left">NA</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Draw</td>
+      <td style="text-align: right">8916</td>
+      <td style="text-align: left">NA</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>To reduce the methods to a set of essential terms: we can first flag correct terms and alternative spellings, then determine whether any other terms are similar to these entries. We then combine alternative terms and discard terms that don’t match to anything (these are terms that make no sense like “Shane Garrett”).</p>
+
+<p>To identify misspellings, we can use approximate string matching. Starting with each “correct” term and a list of unmatched terms, we determine how many insertions, deletions or substitutions of letters are needed to generate each unmatched term (note: insertions are not as strictly penalized because many methods contain a note such “No Contest - Overturned by NSAC”). If the score is below a threshold, the two strings approximately match and can be combined.</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="c1"># accurate terms and alternative names
+</span><span class="n">primary_fields</span> <span class="o">&lt;-</span> <span class="n">all_methods</span><span class="o">$</span><span class="n">Method</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">12</span><span class="p">]</span>
+
+<span class="c1"># transformation costs
+</span><span class="n">match_costs</span> <span class="o">&lt;-</span> <span class="n">c</span><span class="p">(</span><span class="n">insertions</span> <span class="o">=</span> <span class="m">1</span><span class="p">,</span> <span class="n">deletions</span> <span class="o">=</span> <span class="m">10</span><span class="p">,</span> <span class="n">substitutions</span> <span class="o">=</span> <span class="m">10</span><span class="p">)</span>
+<span class="k">for</span><span class="p">(</span><span class="n">a_field</span> <span class="k">in</span> <span class="n">rev</span><span class="p">(</span><span class="n">primary_fields</span><span class="p">[</span><span class="o">!</span><span class="n">is.na</span><span class="p">(</span><span class="n">primary_fields</span><span class="p">)])){</span>
+  <span class="n">all_methods</span><span class="o">$</span><span class="n">Method_overwrite</span><span class="p">[</span><span class="n">agrep</span><span class="p">(</span><span class="n">a_field</span><span class="p">,</span> <span class="n">all_methods</span><span class="o">$</span><span class="n">Method</span><span class="p">,</span> <span class="n">ignore.case</span> <span class="o">=</span> <span class="n">T</span><span class="p">,</span> <span class="n">costs</span> <span class="o">=</span> <span class="n">match_costs</span><span class="p">,</span> <span class="n">max.distance</span> <span class="o">=</span> <span class="m">0.2</span><span class="p">)]</span> <span class="o">&lt;-</span> <span class="n">a_field</span>
+<span class="p">}</span>
+
+<span class="c1"># Combine similar categories
+</span><span class="n">all_methods</span><span class="o">$</span><span class="n">Method_overwrite</span><span class="p">[</span><span class="n">grep</span><span class="p">(</span><span class="s1">'No Decision'</span><span class="p">,</span> <span class="n">all_methods</span><span class="o">$</span><span class="n">Method</span><span class="p">)]</span> <span class="o">&lt;-</span> <span class="s2">"NC"</span>
+<span class="n">all_methods</span><span class="o">$</span><span class="n">Method_overwrite</span><span class="p">[</span><span class="n">grep</span><span class="p">(</span><span class="s1">'No Contest'</span><span class="p">,</span> <span class="n">all_methods</span><span class="o">$</span><span class="n">Method</span><span class="p">)]</span> <span class="o">&lt;-</span> <span class="s2">"NC"</span>
+<span class="n">all_methods</span><span class="o">$</span><span class="n">Method_overwrite</span><span class="p">[</span><span class="n">all_methods</span><span class="o">$</span><span class="n">Method_overwrite</span> <span class="o">==</span> <span class="s2">"Disqualification"</span><span class="p">]</span> <span class="o">&lt;-</span> <span class="s2">"DQ"</span>
+<span class="n">all_methods</span><span class="o">$</span><span class="n">Method_overwrite</span><span class="p">[</span><span class="n">all_methods</span><span class="o">$</span><span class="n">Method_overwrite</span> <span class="o">==</span> <span class="s2">"No Contest"</span><span class="p">]</span> <span class="o">&lt;-</span> <span class="s2">"NC"</span>
+<span class="n">all_methods</span><span class="o">$</span><span class="n">Method_overwrite</span><span class="p">[</span><span class="n">all_methods</span><span class="o">$</span><span class="n">Method</span> <span class="o">==</span> <span class="s2">"Unknown"</span><span class="p">]</span> <span class="o">&lt;-</span> <span class="n">NA</span>
+<span class="n">all_methods</span><span class="o">$</span><span class="n">Method_overwrite</span><span class="p">[</span><span class="n">all_methods</span><span class="o">$</span><span class="n">Method</span> <span class="o">==</span> <span class="s2">"Points"</span><span class="p">]</span> <span class="o">&lt;-</span> <span class="s2">"Decision"</span>
+
+<span class="n">table</span><span class="p">(</span><span class="n">all_methods</span><span class="o">$</span><span class="n">Method_overwrite</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">## 
+##   Decision         DQ       Draw         KO         NC Submission 
+##          8          3          2          6         27         15 
+##        TKO 
+##          2</code></pre></figure>
+
+<p>Using fuzzy string matching and a couple of rules to combine categories we can reduce combine 63 of the 99 reported methods into 7 essential categories.</p>
+
+<h3 id="cleaning-up-finishes">Cleaning up finishes</h3>
+
+<p>The problem of reducing the 1185 distinct finishes to an essential subset is considerably more challenging than condensing methods was. This primarily stems from three issues:</p>
+
+<ol>
+  <li>There are a large number of categories.</li>
+  <li>Most categories are accurately described, but may be too specific to be useful.</li>
+  <li>Some categories are inconsistent (e.g. winning by a draw, no contest by punches).</li>
+</ol>
+
+<p>Because of the latter two issues and in spite of the first issue, categories were manually combined into a focused and consistent subset of finishes.</p>
+
+<p>Aggregating categories is a bit of an art. It would be difficult to identify trends in categories that were too small (&lt;100 instances), while categories that were too large might end up lumping together fundamentally different finishes. Taking the many categories of chokes as an example, some chokes are common and remained their own category (e.g. Triangle, Arm-Triangle, RNC, and Guillotine Choke), while uncommon chokes were either combined into a more general “Choke” category (e.g Crucifex and Peruvian Necktie) or combined with similar chokes (e.g. Flying Triangle to Triangle, Bulldog to Guillotine).</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">all_finishes</span> <span class="o">&lt;-</span> <span class="n">all_bouts</span> <span class="o">%&gt;%</span>
+  <span class="c1"># count all unique combinations of method and finish
+</span>  <span class="n">count</span><span class="p">(</span><span class="n">Method</span><span class="p">,</span> <span class="n">Finish</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  <span class="c1"># convert methods to consensus methods
+</span>  <span class="n">left_join</span><span class="p">(</span><span class="n">all_methods</span> <span class="o">%&gt;%</span> <span class="n">select</span><span class="p">(</span><span class="o">-</span><span class="n">n</span><span class="p">),</span> <span class="n">by</span> <span class="o">=</span> <span class="s2">"Method"</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  <span class="c1"># recount
+</span>  <span class="n">count</span><span class="p">(</span><span class="n">Method_overwrite</span><span class="p">,</span> <span class="n">Finish</span><span class="p">,</span> <span class="n">wt</span> <span class="o">=</span> <span class="n">n</span><span class="p">)</span>
+
+<span class="c1"># load previously annotated categories
+</span><span class="n">past_categories</span> <span class="o">&lt;-</span> <span class="n">read.delim</span><span class="p">(</span><span class="s2">"~/Desktop/MMA/software/data/annotations/Finish_categories.txt"</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  <span class="n">tbl_df</span><span class="p">()</span> <span class="o">%&gt;%</span>
+  <span class="n">select</span><span class="p">(</span><span class="n">Method_overwrite</span><span class="p">,</span> <span class="n">Finish</span><span class="p">,</span> <span class="n">specific</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  <span class="n">unique</span>
+
+<span class="n">all_finishes</span> <span class="o">&lt;-</span> <span class="n">all_finishes</span> <span class="o">%&gt;%</span>
+  <span class="c1"># join previously annotated categories to current methods and finishes
+</span>  <span class="n">left_join</span><span class="p">(</span><span class="n">past_categories</span><span class="p">,</span> <span class="n">by</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="s2">"Finish"</span><span class="p">,</span> <span class="s2">"Method_overwrite"</span><span class="p">))</span> <span class="o">%&gt;%</span>
+  <span class="n">rename</span><span class="p">(</span><span class="n">Finish_overwrite</span> <span class="o">=</span> <span class="n">specific</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  <span class="n">ungroup</span><span class="p">()</span> <span class="o">%&gt;%</span>
+  <span class="n">arrange</span><span class="p">(</span><span class="n">Method_overwrite</span><span class="p">,</span> <span class="n">Finish</span><span class="p">)</span>
+
+<span class="n">all_results</span> <span class="o">&lt;-</span> <span class="n">all_bouts</span> <span class="o">%&gt;%</span>
+  <span class="n">select</span><span class="p">(</span><span class="n">Result</span><span class="o">:</span><span class="n">Finish</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  <span class="n">count</span><span class="p">(</span><span class="n">Result</span><span class="p">,</span> <span class="n">Method</span><span class="p">,</span> <span class="n">Finish</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  <span class="n">left_join</span><span class="p">(</span><span class="n">all_methods</span> <span class="o">%&gt;%</span> <span class="n">select</span><span class="p">(</span><span class="o">-</span><span class="n">n</span><span class="p">),</span> <span class="n">by</span> <span class="o">=</span> <span class="s2">"Method"</span><span class="p">)</span>  <span class="o">%&gt;%</span>
+  <span class="n">left_join</span><span class="p">(</span><span class="n">all_finishes</span> <span class="o">%&gt;%</span> <span class="n">select</span><span class="p">(</span><span class="o">-</span><span class="n">n</span><span class="p">),</span> <span class="n">by</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="s2">"Method_overwrite"</span><span class="p">,</span> <span class="s2">"Finish"</span><span class="p">))</span> <span class="o">%&gt;%</span>
+  <span class="n">count</span><span class="p">(</span><span class="n">Result</span><span class="p">,</span> <span class="n">Method_overwrite</span><span class="p">,</span> <span class="n">Finish_overwrite</span><span class="p">,</span> <span class="n">wt</span> <span class="o">=</span> <span class="n">n</span><span class="p">)</span></code></pre></figure>
+
+<h3 id="summary-of-methods-and-finishes">Summary of methods and finishes</h3>
+
+<p>To visualize the frequency of methods and finishes, I will use treemaps generated using the <a href="https://cran.r-project.org/web/packages/treemap/index.html">treemap</a> R package. A treemap visualizes the frequency of categories based on the area of a rectangle that they occupy (a category at 25% will occupy 25% of the total area). One nice feature about treemaps is that they can easily display hierarchical information. This won’t be useful for methods, but finishes can be grouped into subcategories to improve visualization.</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">library</span><span class="p">(</span><span class="n">treemap</span><span class="p">)</span>
+
+<span class="n">methods</span> <span class="o">&lt;-</span> <span class="n">finish_types</span> <span class="o">%&gt;%</span>
+  <span class="n">select</span><span class="p">(</span><span class="n">Method</span> <span class="o">=</span> <span class="n">Method_cleanup</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  <span class="n">count</span><span class="p">(</span><span class="n">Method</span><span class="p">,</span> <span class="n">wt</span> <span class="o">=</span> <span class="n">n</span><span class="p">)</span>
+
+<span class="n">treemap</span><span class="p">(</span><span class="n">methods</span><span class="p">,</span> 
+<span class="n">index</span> <span class="o">=</span> <span class="s2">"Method"</span><span class="p">,</span>
+<span class="n">vSize</span> <span class="o">=</span> <span class="s2">"n"</span><span class="p">,</span>
+<span class="n">title</span> <span class="o">=</span> <span class="s2">"Frequency of methods in MMA"</span><span class="p">,</span>
+<span class="n">fontsize.labels</span> <span class="o">=</span> <span class="m">15</span><span class="p">)</span></code></pre></figure>
+
+<p><img src="''figure/source/2016-05-05-summarizingFights/unnamed-chunk-8-1.png" title="plot of chunk unnamed-chunk-8" alt="plot of chunk unnamed-chunk-8" style="display: block; margin: auto;" /></p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">finishes</span> <span class="o">&lt;-</span> <span class="n">finish_types</span> <span class="o">%&gt;%</span>
+  <span class="n">select</span><span class="p">(</span><span class="n">Category</span> <span class="o">=</span> <span class="n">General_finish</span><span class="p">,</span> <span class="n">Finish</span> <span class="o">=</span> <span class="n">Finish_cleanup</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  <span class="n">count</span><span class="p">(</span><span class="n">Category</span><span class="p">,</span> <span class="n">Finish</span><span class="p">,</span> <span class="n">wt</span> <span class="o">=</span> <span class="n">n</span><span class="p">)</span>
+
+<span class="n">treemap</span><span class="p">(</span><span class="n">finishes</span><span class="p">,</span> 
+<span class="n">index</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="s2">"Category"</span><span class="p">,</span> <span class="s2">"Finish"</span><span class="p">),</span>
+<span class="n">vSize</span> <span class="o">=</span> <span class="s2">"n"</span><span class="p">,</span>
+<span class="n">title</span> <span class="o">=</span> <span class="s2">"Frequency of finishes in MMA"</span><span class="p">,</span>
+<span class="n">fontsize.labels</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">15</span><span class="p">))</span></code></pre></figure>
+
+<p><img src="''figure/source/2016-05-05-summarizingFights/unnamed-chunk-9-1.png" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" style="display: block; margin: auto;" /></p>
+
+<p>By visualizing finishes, we can see that the majority of finishes fall into a relatively small number of categories. The most common specific finishes were punches (a massive category that was split into TKO, KO and submission to provide some resolution), unanimous decision and three major submissions (Armbar, RNC and Guillotine). The most common classes of finishes were punches, followed by chokes and then decision. The fourth largest class was essentially miscellaneous finishes, a class that primarily pertains to fights where a specific finish was not recorded.</p>
+
+<p>Now that we have cleaned up the results of our MMA matches, in my next post, I will discuss how we can clean up the data on individual fighters. This will help shed light on the demographics of MMA fighters, focusing on where MMA fighters live and the relative frequency of different weight classes.</p>
+
+<p>Stay tuned, because in a couple weeks, I will revisit this finishes dataset. In this post, we grouped all wins into 50 well-defined categories. Individual fighters do not tend to use all types of finishes but tend to specialize in a subset of correlated finishes. Looking at the cooccurence of pairs of finishes, we can get a high level picture of the major MMA styles.</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="http://www.fightprior.com/2016/01/02/placeholder-post/">
         Placeholder Post
       </a>
     </h1>
