@@ -25,10 +25,9 @@ layout: default
       </li>
     {% endfor %}
   </ul>
-</div>
 
-<div>
-
-<section id="disqus_thread"></section><!-- /#disqus_thread -->
+	{% if page.comments == true %}
+	<section id="disqus_thread"></section><!-- /#disqus_thread -->
+	{% endif %}
 
 </div>
