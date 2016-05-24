@@ -20,3 +20,6 @@ author:
 
 # Custom vars
 version:             1.0.0
+
+# Build settings
+markdown: kramdown
