@@ -5,11 +5,11 @@
 
 ul.share-buttons{
   list-style: none;
-  padding: 20px;
+  padding: 40px;
 }
 
 ul.share-buttons li{
-  padding-left:    0.5rem;
+  padding-left:    0.3rem;
   float: left;
-  padding-right:    0.5rem;
+  padding-right:    0.3rem;
 }
