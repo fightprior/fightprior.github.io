@@ -5,7 +5,17 @@ layout: default
 <div class="post">
   <h1 class="post-title">{{ page.title }}</h1>
   <span class="post-date">{{ page.date | date_to_string }}</span>
+  
+  {% assign author = site.data.authors[page.author] %}
+  {% if author %}
+    <span>
+        By <a href="{{ author.web }}" target="_blank">{{ author.name }}</a>
+  </span>
+  {% endif %}
+  
   {{ content }}
+  {% include social-share.html %}
+
 </div>
 
 <div class="related">
@@ -22,4 +32,10 @@ layout: default
       </li>
     {% endfor %}
   </ul>
+
+	{% if page.comments == true %}
+	{% include _disqus_comments.html %}
+	<section id="disqus_thread"></section><!-- /#disqus_thread -->
+	{% endif %}
+
 </div>

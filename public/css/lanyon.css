@@ -51,6 +51,9 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: -.025rem;
 }
 
+h1, h2, h3{
+  color: #ac4142
+}
 
 /*
  * Wrapper
@@ -83,6 +86,9 @@ h1, h2, h3, h4, h5, h6 {
 @media (min-width: 56em) {
   .container {
     max-width: 80%;
+  }
+  .page{
+  	max-width: 38rem;
   }
 }
 
@@ -316,7 +322,7 @@ a.sidebar-nav-item:focus {
 .page-title,
 .post-title,
 .post-title a {
-  color: #303030;
+  color: #ac4142;
 }
 .page-title,
 .post-title {
