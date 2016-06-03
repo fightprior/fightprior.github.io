@@ -133,10 +133,8 @@ table(all_methods$Method_overwrite)
 
 {% highlight text %}
 ## 
-##   Decision         DQ       Draw         KO         NC Submission 
-##          8          3          2          6         27         15 
-##        TKO 
-##          2
+##   Decision         DQ       Draw         KO         NC Submission        TKO 
+##          8          3          2          6         27         15          2
 {% endhighlight %}
 
 Using fuzzy string matching and a couple of rules to combine categories we can reduce combine 63 of the 99 reported methods into 7 essential categories.
@@ -205,7 +203,7 @@ title = "Frequency of methods in MMA",
 fontsize.labels = 25)
 {% endhighlight %}
 
-<img src="''figure/source/2016-05-05-summarizingFights/unnamed-chunk-8-1.png" title="plot of chunk unnamed-chunk-8" alt="plot of chunk unnamed-chunk-8" style="display: block; margin: auto;" />
+<img src="/figure/source/2016-05-05-summarizingFights/unnamed-chunk-8-1.png" title="plot of chunk unnamed-chunk-8" alt="plot of chunk unnamed-chunk-8" style="display: block; margin: auto;" />
 
 
 
@@ -221,7 +219,7 @@ title = "Frequency of finishes in MMA",
 fontsize.labels = c(0, 25))
 {% endhighlight %}
 
-<img src="''figure/source/2016-05-05-summarizingFights/unnamed-chunk-9-1.png" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" style="display: block; margin: auto;" />
+<img src="/figure/source/2016-05-05-summarizingFights/unnamed-chunk-9-1.png" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" style="display: block; margin: auto;" />
 
 By visualizing finishes, we can see that the majority of finishes fall into a relatively small number of categories. The most common specific finishes were punches (a massive category that was split into TKO, KO and submission to provide some resolution), unanimous decision and three major submissions (Armbar, RNC and Guillotine). The most common classes of finishes were punches, followed by chokes and then decision. The fourth largest class was essentially miscellaneous finishes, a class that primarily pertains to fights where a specific finish was not recorded.
 
