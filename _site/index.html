@@ -39,7 +39,7 @@
 <!-- Toggleable sidebar -->
 <div class="sidebar" id="sidebar">
   <div class="sidebar-item">
-    <p>Prior to the Fight: Mixed Martial Arts Data Science and Statistical Analysis</p>
+    <p>Fight Prior: Mixed Martial Arts Data Science and Statistical Analysis</p>
   </div>
 
   <nav class="sidebar-nav">
@@ -348,10 +348,8 @@
 <span class="n">table</span><span class="p">(</span><span class="n">all_methods</span><span class="o">$</span><span class="n">Method_overwrite</span><span class="p">)</span></code></pre></figure>
 
 <figure class="highlight"><pre><code class="language-text" data-lang="text">## 
-##   Decision         DQ       Draw         KO         NC Submission 
-##          8          3          2          6         27         15 
-##        TKO 
-##          2</code></pre></figure>
+##   Decision         DQ       Draw         KO         NC Submission        TKO 
+##          8          3          2          6         27         15          2</code></pre></figure>
 
 <p>Using fuzzy string matching and a couple of rules to combine categories we can reduce combine 63 of the 99 reported methods into 7 essential categories.</p>
 
@@ -413,7 +411,7 @@
 <span class="n">title</span> <span class="o">=</span> <span class="s2">"Frequency of methods in MMA"</span><span class="p">,</span>
 <span class="n">fontsize.labels</span> <span class="o">=</span> <span class="m">15</span><span class="p">)</span></code></pre></figure>
 
-<p><img src="''figure/source/2016-05-05-summarizingFights/unnamed-chunk-8-1.png" title="plot of chunk unnamed-chunk-8" alt="plot of chunk unnamed-chunk-8" style="display: block; margin: auto;" /></p>
+<p><img src="/figure/source/2016-05-05-summarizingFights/unnamed-chunk-8-1.png" title="plot of chunk unnamed-chunk-8" alt="plot of chunk unnamed-chunk-8" style="display: block; margin: auto;" /></p>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">finishes</span> <span class="o">&lt;-</span> <span class="n">finish_types</span> <span class="o">%&gt;%</span>
   <span class="n">select</span><span class="p">(</span><span class="n">Category</span> <span class="o">=</span> <span class="n">General_finish</span><span class="p">,</span> <span class="n">Finish</span> <span class="o">=</span> <span class="n">Finish_cleanup</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span> <span class="o">%&gt;%</span>
@@ -425,7 +423,7 @@
 <span class="n">title</span> <span class="o">=</span> <span class="s2">"Frequency of finishes in MMA"</span><span class="p">,</span>
 <span class="n">fontsize.labels</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">15</span><span class="p">))</span></code></pre></figure>
 
-<p><img src="''figure/source/2016-05-05-summarizingFights/unnamed-chunk-9-1.png" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" style="display: block; margin: auto;" /></p>
+<p><img src="/figure/source/2016-05-05-summarizingFights/unnamed-chunk-9-1.png" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" style="display: block; margin: auto;" /></p>
 
 <p>By visualizing finishes, we can see that the majority of finishes fall into a relatively small number of categories. The most common specific finishes were punches (a massive category that was split into TKO, KO and submission to provide some resolution), unanimous decision and three major submissions (Armbar, RNC and Guillotine). The most common classes of finishes were punches, followed by chokes and then decision. The fourth largest class was essentially miscellaneous finishes, a class that primarily pertains to fights where a specific finish was not recorded.</p>
 
