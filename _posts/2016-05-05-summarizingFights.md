@@ -200,7 +200,7 @@ treemap(methods,
 index = "Method",
 vSize = "n",
 title = "Frequency of methods in MMA",
-fontsize.labels = 25)
+fontsize.labels = 25, fontsize.title = 30)
 {% endhighlight %}
 
 <img src="/figure/source/2016-05-05-summarizingFights/unnamed-chunk-8-1.png" title="plot of chunk unnamed-chunk-8" alt="plot of chunk unnamed-chunk-8" style="display: block; margin: auto;" />
@@ -216,7 +216,7 @@ treemap(finishes,
 index = c("Category", "Finish"),
 vSize = "n",
 title = "Frequency of finishes in MMA",
-fontsize.labels = c(0, 25))
+fontsize.labels = c(0, 25), fontsize.title = 30)
 {% endhighlight %}
 
 <img src="/figure/source/2016-05-05-summarizingFights/unnamed-chunk-9-1.png" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" style="display: block; margin: auto;" />

@@ -27,6 +27,9 @@ local({
       base.url = 'http://db.yihui.name/jekyll/'
     )
   }
+  # set knitr default options
   knitr::opts_knit$set(width = 100)
+  knitr::opts_chunk$set(fig.align="center", fig.width = 10, fig.height = 10)
+  
   knitr::knit(a[1], a[2], quiet = TRUE, encoding = 'UTF-8', envir = .GlobalEnv)
 })

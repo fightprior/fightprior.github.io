@@ -23,7 +23,6 @@ options(stringsAsFactors = F)
 ```
 
 ```{r}
-
 load("~/Desktop/MMA/software/data/raw_fight_data/fighter_output.Rdata")
 
 fighter_output[[1]]$query
@@ -31,7 +30,6 @@ fighter_output[[1]]$query
 kable(fighter_output[[1]]$vital_stats, row.names=FALSE)
 
 kable(head(fighter_output[[1]]$opponents), row.names=FALSE)
-
 ```
 
 We can see that most of the match data is in the "opponents" entries, but this table is missing data from Andrei himself. In order to make use of this table, we will need to add an entry for Andrei's name. Also, while Andrei Arlovski is a fairly distinctive name, not all MMA fighters will have unique names. In fact, there are 15 distinct Chris Smiths in our dataset and 17 Rafael Silvas! Since we will want to uniquely match fighters to their bouts, each fighter needs a unique identifier. Because each fighter has a unique webpage, these urls can be used as unique indicators.
@@ -39,7 +37,6 @@ We can see that most of the match data is in the "opponents" entries, but this t
 To summarize each individual fighter's matches, we can add the fighter's url and name to his/her matches. Because the fields in all individual fighters' tables will match, we can stack each fighter's fight data to generate a table of all fights.
 
 ```{r}
-
 all_bouts <- 
   # generate a list of tables: each fighter-specific entry has the fighter link,
   # fighter name and all bouts
@@ -50,7 +47,6 @@ all_bouts <-
   bind_rows %>%
   # convert to a tbl_df for nicer displays
   tbl_df
-
 ```
 
 Now that we have aggregated data from all bouts into a single table we can start an exploratory analysis, but before we start interpreting this large raw dataset some cleanup may be necessary. Going forward, we will likely care about who fought, who won, and how they won. These first two questions are pretty straight forward, but there are lots of ways in which a fighter can win and the summary is often subjective. The two fields that address how a fight was won are the method of victory (such as Decision or KO) and the finish (a more specific indicator of the finishing-move such as by Armbar, Punches or Hadouken). Both of these fields need some processing: there are `r all_bouts$Method %>% unique %>% length` unique methods in this dataset when only 7 unique methods are usually recognized. The rest of the variations are either misspelled, alternative terms or an irrelevant entry. Similarly there are `r all_bouts$Finish %>% unique %>% length` unique finishes present including many rare finishes like "vomiting" or "injured falling through ropes." To make better use of methods and finishes we can combine rare fields to generate a more informative core set.
@@ -60,7 +56,6 @@ Now that we have aggregated data from all bouts into a single table we can start
 There are `r all_bouts$Method %>% unique %>% length` unique methods in this dataset: some fields are correct as written such as submission and TKO, others are alternative words such as "No Contest" and "NC", while many variations are misspellings of correct terms.
 
 ```{r}
-
 all_methods <- all_bouts %>%
   # count unique instances of each method
   count(Method) %>%
@@ -70,7 +65,6 @@ all_methods <- all_bouts %>%
   mutate(Method_overwrite = NA)
 
 kable(head(all_methods), row.names = F)
-
 ```
 
 To reduce the methods to a set of essential terms: we can first flag correct terms and alternative spellings, then determine whether any other terms are similar to these entries. We then combine alternative terms and discard terms that don't match to anything (these are terms that make no sense like "Shane Garrett").
@@ -78,7 +72,6 @@ To reduce the methods to a set of essential terms: we can first flag correct ter
 To identify misspellings, we can use approximate string matching. Starting with each "correct" term and a list of unmatched terms, we determine how many insertions, deletions or substitutions of letters are needed to generate each unmatched term (note: insertions are not as strictly penalized because many methods contain a note such "No Contest - Overturned by NSAC"). If the score is below a threshold, the two strings approximately match and can be combined.
 
 ```{r}
-
 # accurate terms and alternative names
 primary_fields <- all_methods$Method[1:12]
 
@@ -97,7 +90,6 @@ all_methods$Method_overwrite[all_methods$Method == "Unknown"] <- NA
 all_methods$Method_overwrite[all_methods$Method == "Points"] <- "Decision"
 
 table(all_methods$Method_overwrite)
-
 ```
 
 Using fuzzy string matching and a couple of rules to combine categories we can reduce combine `r sum(table(all_methods$Method_overwrite))` of the `r all_bouts$Method %>% unique %>% length` reported methods into 7 essential categories.
@@ -115,7 +107,6 @@ Because of the latter two issues and in spite of the first issue, categories wer
 Aggregating categories is a bit of an art. It would be difficult to identify trends in categories that were too small (<100 instances), while categories that were too large might end up lumping together fundamentally different finishes. Taking the many categories of chokes as an example, some chokes are common and remained their own category (e.g. Triangle, Arm-Triangle, RNC, and Guillotine Choke), while uncommon chokes were either combined into a more general "Choke" category (e.g Crucifex and Peruvian Necktie) or combined with similar chokes (e.g. Flying Triangle to Triangle, Bulldog to Guillotine). 
 
 ```{r}
-
 all_finishes <- all_bouts %>%
   # count all unique combinations of method and finish
   count(Method, Finish) %>%
@@ -143,11 +134,9 @@ all_results <- all_bouts %>%
   left_join(all_methods %>% select(-n), by = "Method")  %>%
   left_join(all_finishes %>% select(-n), by = c("Method_overwrite", "Finish")) %>%
   count(Result, Method_overwrite, Finish_overwrite, wt = n)
-
 ```
 
 ```{r echo = F}
-
 consensus_finish <- all_results %>% ungroup() %>% select(Result, Method_overwrite, Finish_overwrite, n) %>% unique() %>%
   mutate(Result_short = ifelse(Result %in% c("NC", "draw"), Result, substr(Result, 1, 1)),
          Result_short = paste0(toupper(substr(Result_short, 1, 1)), substring(Result_short, 2)))
@@ -169,15 +158,13 @@ past_types <- read.delim("~/Desktop/MMA/software/data/annotations/Finish_types.t
 
 finish_types <- consensus_finish %>% select(Result, Method_cleanup, Finish_cleanup, Overall_finish, Overall_result, n) %>%
   left_join(past_types, by = c("Overall_finish", "Overall_result"))
-
 ```
 
 ### Summary of methods and finishes
 
 To visualize the frequency of methods and finishes, I will use treemaps generated using the [treemap](https://cran.r-project.org/web/packages/treemap/index.html) R package. A treemap visualizes the frequency of categories based on the area of a rectangle that they occupy (a category at 25% will occupy 25% of the total area). One nice feature about treemaps is that they can easily display hierarchical information. This won't be useful for methods, but finishes can be grouped into subcategories to improve visualization.
 
-```{r fig.align="center", fig.width = 8}
-
+```{r}
 library(treemap)
 
 methods <- finish_types %>%
@@ -188,13 +175,11 @@ treemap(methods,
 index = "Method",
 vSize = "n",
 title = "Frequency of methods in MMA",
-fontsize.labels = 25)
-
+fontsize.labels = 25, fontsize.title = 30)
 ```
 
 
-```{r fig.align="center", fig.width = 8, fig.height = 7}
-
+```{r}
 finishes <- finish_types %>%
   select(Category = General_finish, Finish = Finish_cleanup, n) %>%
   count(Category, Finish, wt = n)
@@ -203,8 +188,7 @@ treemap(finishes,
 index = c("Category", "Finish"),
 vSize = "n",
 title = "Frequency of finishes in MMA",
-fontsize.labels = c(0, 25))
-
+fontsize.labels = c(0, 25), fontsize.title = 30)
 ```
 
 By visualizing finishes, we can see that the majority of finishes fall into a relatively small number of categories. The most common specific finishes were punches (a massive category that was split into TKO, KO and submission to provide some resolution), unanimous decision and three major submissions (Armbar, RNC and Guillotine). The most common classes of finishes were punches, followed by chokes and then decision. The fourth largest class was essentially miscellaneous finishes, a class that primarily pertains to fights where a specific finish was not recorded.
