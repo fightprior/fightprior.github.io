@@ -27,6 +27,6 @@ local({
       base.url = 'http://db.yihui.name/jekyll/'
     )
   }
-  knitr::opts_knit$set(width = 70)
+  knitr::opts_knit$set(width = 100)
   knitr::knit(a[1], a[2], quiet = TRUE, encoding = 'UTF-8', envir = .GlobalEnv)
 })
