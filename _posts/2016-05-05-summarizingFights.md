@@ -1,7 +1,9 @@
 ---
 title: "Building a large database of MMA fight results II: quantitatively summarizing over 240,000 MMA fights"
 description: "Summarizing the results and finishes of over 240,000 MMA fights"
+author: sean
 layout: post
+comments: true
 tags: [database, treemaps]
 ---
 
@@ -200,7 +202,7 @@ treemap(methods,
 index = "Method",
 vSize = "n",
 title = "Frequency of methods in MMA",
-fontsize.labels = 15)
+fontsize.labels = 25)
 {% endhighlight %}
 
 <img src="''figure/source/2016-05-05-summarizingFights/unnamed-chunk-8-1.png" title="plot of chunk unnamed-chunk-8" alt="plot of chunk unnamed-chunk-8" style="display: block; margin: auto;" />
@@ -216,7 +218,7 @@ treemap(finishes,
 index = c("Category", "Finish"),
 vSize = "n",
 title = "Frequency of finishes in MMA",
-fontsize.labels = c(0, 15))
+fontsize.labels = c(0, 25))
 {% endhighlight %}
 
 <img src="''figure/source/2016-05-05-summarizingFights/unnamed-chunk-9-1.png" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" style="display: block; margin: auto;" />
