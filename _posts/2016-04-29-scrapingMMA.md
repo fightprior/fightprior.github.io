@@ -19,10 +19,6 @@ For example, if we wanted to learn more about Andrei Arlovski we could look at h
 These websites, taking Sherdog as an example, provide a massive amount of factual data on fighters' past performances. We can see Andrei's age, weight, height as well as a list of his previous fights. Importantly, for each of these fights, we have the opponent's name and a link to their corresponding webpage, so we could visit their webpage by following the link. We could follow the link to Arlovski's most recent opponent, Stipe Miocic, as well as the links to Arlovski's other opponents; determine their opponents in turn: and continue this iterative process until all fighters have been explored. Before we can implement this strategy, we need to be able to extract opponents' links from individual webpages in addition to the fight information in which we are interested.
 
 <br/>
-<br/>
-<br/>
-<br/>
-<br/>
 
 ### Extracting information from fighter pages using rvest
 
@@ -30,11 +26,13 @@ To make use of the information in web pages, we need to first specify the attrib
 
 Identifying common features of html can be challenging, but this process can be greatly simplified using CSS selectors like [SelectorGadget](http://selectorgadget.com/). Selector gadget allows you to interactively select the parts of the html that you are interested in and the parts that you don't want selected in order to generate a set of rules that guide the data extraction.
 
+<br/>
+
 ### Extracting name and nickname
 
-![Name and nickname CSS]({{ site.url }}/figure/2016-04-29-scrapingMMA/nickname_CSS.png){: .align-right }
-
 As an example, if we want to extract Arlovski's name and nickname, then we can just click on his name and nickname and any fields that are extracted will be highlighted in green. If some fields are inappropriately selected (as shown below i.e., Andrei's next fight in Ahoy Rotterdam), then these entries are then unselected and will be shown in red. From this input, SelectorGadget generates a minimal CSS selector that can then be used to extract name and nickname from Arlovski's page or any other fighter's page that we want to explore. For name and nickname this is: ".nickname em , .fn".
+
+![Name and nickname CSS]({{ site.url }}/figure/2016-04-29-scrapingMMA/nickname_CSS.png){: .align-right }
 
 Now that we have a CSS selector for name and nickname we need a way of programmatically extracting this information from webpages. To carry out this analysis, I will use the [freely available](https://cran.r-project.org/) programming language R. R is well-suited for streamlined data analysis due to its many user-created packages. One such package that will form the backbone of my analysis is [rvest](https://github.com/hadley/rvest). I will also use dplyr and the %>% convention to simplify and improve the readability of my analysis.
 
@@ -137,7 +135,7 @@ One possibly unsatisfying aspect of searching for fighters based on their shared
 
 One obvious approach to dealing with the possibility of multiple disconnected sets of fighters would be to initialize our search using a fighter in each category. This may work for the major male and female subnetworks but if small pockets of fighters who have only fought one another exist, it would be difficult to identify these groups. If we care about such fighters, we can modify our fighter-to-fighter search strategy to search for fighters in additional ways. To more comprehensively comb through possible fighters, we can modify our search strategy to include both the events (e.g. UFC 195) which fighters competed in as well as the organizations (e.g. UFC) that these events occurred in. From organizations we can query additional events and from events we can query all fighters that were involved.
 
-![Fighter scraping strategy]({{ site.url }}/figure/2016-04-29-scrapingMMA/scraping_strategy.png)
+![Fighter scraping strategy]({{ site.url }}/figure/2016-04-29-scrapingMMA/scraping_strategy.png){: .align-center }
 
 
 ### What did we get?
