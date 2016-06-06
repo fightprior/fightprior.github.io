@@ -7,7 +7,7 @@ comments: true
 tags: [database, treemaps]
 ---
 
-The essential units of analysis in MMA are the sport's fighters and the bouts between them. In my [previous post](https://FightPrior.com/2016/05/05/summarizingFights/), I discussed how to standardize match data so that the major categories of finishes could be easily visualized.
+The essential units of analysis in MMA are the sport's fighters and the bouts between them. In my [previous post]({{ site.url }}/2016/05/05/summarizingFights/), I discussed how to standardize match data so that the major categories of finishes could be easily visualized.
 
 In this entry, I will discuss how to clean-up fighter-level data. The main goal of this post will be to determine the factors that affect fighter matchups. For some fighters, our data contains useful demographics, while for other fighters, this information is missing. One goal of this post will be to infer missing demographic data based on fighters' previous bouts. For example, if we don't know where in the world a fighter lives, we can probably determine their location with good accuracy if all their fights have been against people from the same region.
 

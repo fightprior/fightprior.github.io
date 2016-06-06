@@ -13,9 +13,9 @@ One way we can think about this question is that fighters will tend to compete a
 
 Looking at the matchups between pairs of fighters is the key to determining what drives these matchups overall. This analysis builds on past posts:
 
-1. [Large-scale acquisition of fighter and fight data](https://FightPrior.com/2016/04/29/scrapingMMA/)
-2. [Quantitatively summarizing 240,000 MMA fights](https://FightPrior.com/2016/05/05/summarizingFights/)
-3. [Summarizing the demographics of 140,000 MMA fighters](https://FightPrior.com/2016/05/13/summarizingFighters/)
+1. [Large-scale acquisition of fighter and fight data]({{ site.url }}/2016/04/29/scrapingMMA/)
+2. [Quantitatively summarizing 240,000 MMA fights]({{ site.url }}/2016/05/05/summarizingFights/)
+3. [Summarizing the demographics of 140,000 MMA fighters]({{ site.url }}/2016/05/13/summarizingFighters/)
 
 
 

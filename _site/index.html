@@ -99,7 +99,7 @@
   
   <div class="post">
     <h1 class="post-title">
-      <a href="http://127.0.0.1:4000/2016/05/17/smallWorldMMA/">
+      <a href="http://www.fightprior.com/2016/05/17/smallWorldMMA/">
         The not-so-small-world network of MMA fighters
       </a>
     </h1>
@@ -113,9 +113,9 @@
 <p>Looking at the matchups between pairs of fighters is the key to determining what drives these matchups overall. This analysis builds on past posts:</p>
 
 <ol>
-  <li><a href="https://FightPrior.com/2016/04/29/scrapingMMA/">Large-scale acquisition of fighter and fight data</a></li>
-  <li><a href="https://FightPrior.com/2016/05/05/summarizingFights/">Quantitatively summarizing 240,000 MMA fights</a></li>
-  <li><a href="https://FightPrior.com/2016/05/13/summarizingFighters/">Summarizing the demographics of 140,000 MMA fighters</a></li>
+  <li><a href="http://www.fightprior.com/2016/04/29/scrapingMMA/">Large-scale acquisition of fighter and fight data</a></li>
+  <li><a href="http://www.fightprior.com/2016/05/05/summarizingFights/">Quantitatively summarizing 240,000 MMA fights</a></li>
+  <li><a href="http://www.fightprior.com/2016/05/13/summarizingFighters/">Summarizing the demographics of 140,000 MMA fighters</a></li>
 </ol>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span>
@@ -435,14 +435,14 @@
   
   <div class="post">
     <h1 class="post-title">
-      <a href="http://127.0.0.1:4000/2016/05/13/summarizingFighters/">
+      <a href="http://www.fightprior.com/2016/05/13/summarizingFighters/">
         Building a large database of MMA fight results III: summarizing the demographics of 140,000 MMA fighters
       </a>
     </h1>
 
     <span class="post-date">13 May 2016</span>
 
-    <p>The essential units of analysis in MMA are the sport’s fighters and the bouts between them. In my <a href="https://FightPrior.com/2016/05/05/summarizingFights/">previous post</a>, I discussed how to standardize match data so that the major categories of finishes could be easily visualized.</p>
+    <p>The essential units of analysis in MMA are the sport’s fighters and the bouts between them. In my <a href="http://www.fightprior.com/2016/05/05/summarizingFights/">previous post</a>, I discussed how to standardize match data so that the major categories of finishes could be easily visualized.</p>
 
 <p>In this entry, I will discuss how to clean-up fighter-level data. The main goal of this post will be to determine the factors that affect fighter matchups. For some fighters, our data contains useful demographics, while for other fighters, this information is missing. One goal of this post will be to infer missing demographic data based on fighters’ previous bouts. For example, if we don’t know where in the world a fighter lives, we can probably determine their location with good accuracy if all their fights have been against people from the same region.</p>
 
@@ -1159,14 +1159,14 @@
   
   <div class="post">
     <h1 class="post-title">
-      <a href="http://127.0.0.1:4000/2016/05/05/summarizingFights/">
+      <a href="http://www.fightprior.com/2016/05/05/summarizingFights/">
         Building a large database of MMA fight results II: quantitatively summarizing over 240,000 MMA fights
       </a>
     </h1>
 
     <span class="post-date">05 May 2016</span>
 
-    <p>In my <a href="https://FightPrior.com/2016/04/29/scrapingMMA/">last post</a>, I discussed how it was possible to extract match-level summaries of more than 240,000 unique MMA bouts between 143,602 fighters. In this entry, I will discuss how data from individual webpages can be combined into a single table with comparable entries. I will then show some high-leve</p>
+    <p>In my <a href="http://www.fightprior.com/2016/04/29/scrapingMMA/">last post</a>, I discussed how it was possible to extract match-level summaries of more than 240,000 unique MMA bouts between 143,602 fighters. In this entry, I will discuss how data from individual webpages can be combined into a single table with comparable entries. I will then show some high-leve</p>
 
 <p>Data from fighters was obtained one webpage at a time, with the fields from one website saved as elements of a list. The fields that we want to work with for the first fighter in this list, Andrei Arlovski, are:</p>
 
@@ -1496,7 +1496,7 @@
   
   <div class="post">
     <h1 class="post-title">
-      <a href="http://127.0.0.1:4000/2016/04/29/scrapingMMA/">
+      <a href="http://www.fightprior.com/2016/04/29/scrapingMMA/">
         Building a large database of MMA fight results I: scraping with rvest
       </a>
     </h1>
@@ -1507,7 +1507,7 @@
 
 <p>For example, if we wanted to learn more about Andrei Arlovski we could look at his <a href="https://en.wikipedia.org/wiki/Andrei_Arlovski">wikipedia page</a> or any number of MMA-specific websites such as <a href="http://www.mixedmartialarts.com/fighter/Andrei-Arlovski:1C1B0969FAC99E77">mixedmartialarts.com</a> or <a href="http://www.sherdog.com/fighter/Andrei-Arlovski-270">sherdog.com</a>.</p>
 
-<p><img src="http://127.0.0.1:4000/figure/2016-04-29-scrapingMMA/sherdog.png" alt="Arlovski sherdog page" class="align-right" /></p>
+<p><img src="http://www.fightprior.com/figure/2016-04-29-scrapingMMA/sherdog.png" alt="Arlovski sherdog page" class="align-right" /></p>
 
 <p>These websites, taking Sherdog as an example, provide a massive amount of factual data on fighters’ past performances. We can see Andrei’s age, weight, height as well as a list of his previous fights. Importantly, for each of these fights, we have the opponent’s name and a link to their corresponding webpage, so we could visit their webpage by following the link. We could follow the link to Arlovski’s most recent opponent, Stipe Miocic, as well as the links to Arlovski’s other opponents; determine their opponents in turn: and continue this iterative process until all fighters have been explored. Before we can implement this strategy, we need to be able to extract opponents’ links from individual webpages in addition to the fight information in which we are interested.</p>
 
@@ -1519,7 +1519,7 @@
 
 <h3 id="extracting-name-and-nickname">Extracting name and nickname</h3>
 
-<p><img src="http://127.0.0.1:4000/figure/2016-04-29-scrapingMMA/nickname_CSS.png" alt="Name and nickname CSS" class="align-right" /></p>
+<p><img src="http://www.fightprior.com/figure/2016-04-29-scrapingMMA/nickname_CSS.png" alt="Name and nickname CSS" class="align-right" /></p>
 
 <p>As an example, if we want to extract Arlovski’s name and nickname, then we can just click on his name and nickname and any fields that are extracted will be highlighted in green. If some fields are inappropriately selected (as shown below i.e., Andrei’s next fight in Ahoy Rotterdam), then these entries are then unselected and will be shown in red. From this input, SelectorGadget generates a minimal CSS selector that can then be used to extract name and nickname from Arlovski’s page or any other fighter’s page that we want to explore. For name and nickname this is: “.nickname em , .fn”.</p>
 
@@ -1686,7 +1686,7 @@
 
 <p>One obvious approach to dealing with the possibility of multiple disconnected sets of fighters would be to initialize our search using a fighter in each category. This may work for the major male and female subnetworks but if small pockets of fighters who have only fought one another exist, it would be difficult to identify these groups. If we care about such fighters, we can modify our fighter-to-fighter search strategy to search for fighters in additional ways. To more comprehensively comb through possible fighters, we can modify our search strategy to include both the events (e.g. UFC 195) which fighters competed in as well as the organizations (e.g. UFC) that these events occurred in. From organizations we can query additional events and from events we can query all fighters that were involved.</p>
 
-<p><img src="http://127.0.0.1:4000/figure/2016-04-29-scrapingMMA/scraping_strategy.png" alt="Fighter scraping strategy" /></p>
+<p><img src="http://www.fightprior.com/figure/2016-04-29-scrapingMMA/scraping_strategy.png" alt="Fighter scraping strategy" /></p>
 
 <h3 id="what-did-we-get">What did we get?</h3>
 
@@ -1743,7 +1743,7 @@
   
   <div class="post">
     <h1 class="post-title">
-      <a href="http://127.0.0.1:4000/2016/01/02/placeholder-post/">
+      <a href="http://www.fightprior.com/2016/01/02/placeholder-post/">
         Placeholder Post
       </a>
     </h1>

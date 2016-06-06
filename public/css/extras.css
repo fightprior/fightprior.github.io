@@ -23,13 +23,9 @@ ul.share-buttons li{
 
 .align-right {
   display: block;
-  margin-left: auto;
+  margin-left: 1em;
   margin-right: auto;
-
-  @include breakpoint($small) {
-    float: right;
-    margin-left: 1em;
-  }
+  float: right;
 }
 
 /* image align center */
