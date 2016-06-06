@@ -14,3 +14,28 @@ ul.share-buttons li{
   float: left;
   padding-right:    0.3rem;
 }
+
+/*
+ * Other formatting
+ */
+
+/* image align right */
+
+.align-right {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+
+  @include breakpoint($small) {
+    float: right;
+    margin-left: 1em;
+  }
+}
+
+/* image align center */
+
+.align-center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
