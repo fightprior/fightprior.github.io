@@ -153,7 +153,6 @@ fight_counts <- bouts %>%
   rename(nfights = n) %>%
   count(nfights)
   
-
 # ggplot2 plotting theme
 hist_theme <- theme(axis.title = element_text(color = "black", size = 25),
                     panel.background = element_rect(fill = "gray93"),
@@ -176,7 +175,7 @@ ggplot(fight_counts, aes(x = nfights, y = n)) +
 
 <img src="/figure/source/2016-04-29-scrapingMMA/nfights-1.png" title="plot of chunk nfights" alt="plot of chunk nfights" style="display: block; margin: auto;" />
 
-Looking at this log-log scatter plot of # of bouts in each fighter's career, it is clear that the majority of fighters have very short careers. Only 53 fighters have fought in more than 10 MMA bouts. 
+Looking at this log-log scatter plot of # of bouts in each fighter's career, it is clear that the majority of fighters have very short careers. Only 9343 fighters have fought in more than 10 MMA bouts. 
 
 Another simple summary of the fight data that we can look at is when most of the fights in the data occurred.
 
