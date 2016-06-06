@@ -25,6 +25,11 @@ For example, if we wanted to learn more about Andrei Arlovski we could look at h
 
 These websites, taking Sherdog as an example, provide a massive amount of factual data on fighters' past performances. We can see Andrei's age, weight, height as well as a list of his previous fights. Importantly, for each of these fights, we have the opponent's name and a link to their corresponding webpage, so we could visit their webpage by following the link. We could follow the link to Arlovski's most recent opponent, Stipe Miocic, as well as the links to Arlovski's other opponents; determine their opponents in turn: and continue this iterative process until all fighters have been explored. Before we can implement this strategy, we need to be able to extract opponents' links from individual webpages in addition to the fight information in which we are interested.
 
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
 
 ### Extracting information from fighter pages using rvest
 
