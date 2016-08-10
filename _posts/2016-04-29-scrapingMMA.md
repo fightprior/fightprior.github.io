@@ -7,10 +7,9 @@ comments: true
 tags: [rvest, database]
 ---
 
-
-
-
 While MMA is an exciting sport that offers many interesting data analysis opportunities, there is no existing dataset that has aggregated the results of the more than 400,000 fights that have occured to date. The challenge is not that the information is not available, rather that the information is distributed across thousands of webpages. If we are looking for individual fighters or MMA events, we can easily find a large amount of information about fighters and their fight histories.
+
+<!--more-->
 
 For example, if we wanted to learn more about Andrei Arlovski we could look at his [wikipedia page](https://en.wikipedia.org/wiki/Andrei_Arlovski) or any number of MMA-specific websites such as [mixedmartialarts.com](http://www.mixedmartialarts.com/fighter/Andrei-Arlovski:1C1B0969FAC99E77) or [sherdog.com](http://www.sherdog.com/fighter/Andrei-Arlovski-270).
 

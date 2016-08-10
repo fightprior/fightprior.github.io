@@ -11,6 +11,8 @@ There are over 140,000 amateur and professional mixed martial artists and the ma
 
 One way we can think about this question is that fighters will tend to compete against other fighters who are relatively similar to them. An amateur fighter may compete against fighters in his town and in neighboring towns. His opponents may do the same. While this fighter is unlikely to compete against fighters who live two towns over, he can still be said to be relatively closely connected to these fighters because they are only two jumps aways. At a broader scale, MMA fighters who are very different may be many jumps apart, seperated by large geographical barriers or other obstructions.
 
+<!--more-->
+
 Looking at the matchups between pairs of fighters is the key to determining what drives these matchups overall. This analysis builds on past posts:
 
 1. [Large-scale acquisition of fighter and fight data]({{ site.url }}/2016/04/29/scrapingMMA/)

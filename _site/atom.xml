@@ -4,7 +4,7 @@
  <title>Fight Prior</title>
  <link href="http://127.0.0.1:4000/atom.xml" rel="self"/>
  <link href="http://127.0.0.1:4000/"/>
- <updated>2016-08-10T13:09:39-04:00</updated>
+ <updated>2016-08-10T13:14:36-04:00</updated>
  <id>http://127.0.0.1:4000</id>
  <author>
    <name>Sean Hackett and John D. Storey</name>
@@ -20,6 +20,8 @@
    <content type="html">&lt;p&gt;There are over 140,000 amateur and professional mixed martial artists and the matchups between these fighters are far from random. It seems pretty obvious that &lt;a href=&quot;http://www.sherdog.com/fighter/Holly-Holm-75125&quot;&gt;Holly Holm’s&lt;/a&gt; next fight won’t be against &lt;a href=&quot;http://www.sherdog.com/fighter/Antonio-Silva-12354&quot;&gt;Bigfoot Silva&lt;/a&gt;, but it is less clear how many reasonable matchups are out there for most fighters.&lt;/p&gt;
 
 &lt;p&gt;One way we can think about this question is that fighters will tend to compete against other fighters who are relatively similar to them. An amateur fighter may compete against fighters in his town and in neighboring towns. His opponents may do the same. While this fighter is unlikely to compete against fighters who live two towns over, he can still be said to be relatively closely connected to these fighters because they are only two jumps aways. At a broader scale, MMA fighters who are very different may be many jumps apart, seperated by large geographical barriers or other obstructions.&lt;/p&gt;
+
+&lt;!--more--&gt;
 
 &lt;p&gt;Looking at the matchups between pairs of fighters is the key to determining what drives these matchups overall. This analysis builds on past posts:&lt;/p&gt;
 
@@ -352,6 +354,8 @@
    <content type="html">&lt;p&gt;The essential units of analysis in MMA are the sport’s fighters and the bouts between them. In my &lt;a href=&quot;http://127.0.0.1:4000/2016/05/05/summarizingFights/&quot;&gt;previous post&lt;/a&gt;, I discussed how to standardize match data so that the major categories of finishes could be easily visualized.&lt;/p&gt;
 
 &lt;p&gt;In this entry, I will discuss how to clean-up fighter-level data. The main goal of this post will be to determine the factors that affect fighter matchups. For some fighters, our data contains useful demographics, while for other fighters, this information is missing. One goal of this post will be to infer missing demographic data based on fighters’ previous bouts. For example, if we don’t know where in the world a fighter lives, we can probably determine their location with good accuracy if all their fights have been against people from the same region.&lt;/p&gt;
+
+&lt;!--more--&gt;
 
 &lt;p&gt;The data that we will primarily work with was collected seperately for each fighter. We will first combine fighters’ data into a single table that can be more easily used.&lt;/p&gt;
 
@@ -1071,6 +1075,8 @@
    <id>http://127.0.0.1:4000/2016/05/05/summarizingFights</id>
    <content type="html">&lt;p&gt;In my &lt;a href=&quot;http://127.0.0.1:4000/2016/04/29/scrapingMMA/&quot;&gt;last post&lt;/a&gt;, I discussed how it was possible to extract match-level summaries of more than 240,000 unique MMA bouts between 143,602 fighters. In this entry, I will discuss how data from individual webpages can be combined into a single table with comparable entries. I will then show some high-leve&lt;/p&gt;
 
+&lt;!--more--&gt;
+
 &lt;p&gt;Data from fighters was obtained one webpage at a time, with the fields from one website saved as elements of a list. The fields that we want to work with for the first fighter in this list, Andrei Arlovski, are:&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;&lt;span class=&quot;n&quot;&gt;load&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;~/Desktop/MMA/software/data/raw_fight_data/fighter_output.Rdata&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
@@ -1403,6 +1409,8 @@
    <updated>2016-04-29T00:00:00-04:00</updated>
    <id>http://127.0.0.1:4000/2016/04/29/scrapingMMA</id>
    <content type="html">&lt;p&gt;While MMA is an exciting sport that offers many interesting data analysis opportunities, there is no existing dataset that has aggregated the results of the more than 400,000 fights that have occured to date. The challenge is not that the information is not available, rather that the information is distributed across thousands of webpages. If we are looking for individual fighters or MMA events, we can easily find a large amount of information about fighters and their fight histories.&lt;/p&gt;
+
+&lt;!--more--&gt;
 
 &lt;p&gt;For example, if we wanted to learn more about Andrei Arlovski we could look at his &lt;a href=&quot;https://en.wikipedia.org/wiki/Andrei_Arlovski&quot;&gt;wikipedia page&lt;/a&gt; or any number of MMA-specific websites such as &lt;a href=&quot;http://www.mixedmartialarts.com/fighter/Andrei-Arlovski:1C1B0969FAC99E77&quot;&gt;mixedmartialarts.com&lt;/a&gt; or &lt;a href=&quot;http://www.sherdog.com/fighter/Andrei-Arlovski-270&quot;&gt;sherdog.com&lt;/a&gt;.&lt;/p&gt;
 

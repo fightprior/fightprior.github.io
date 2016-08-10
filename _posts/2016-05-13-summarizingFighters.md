@@ -11,7 +11,7 @@ The essential units of analysis in MMA are the sport's fighters and the bouts be
 
 In this entry, I will discuss how to clean-up fighter-level data. The main goal of this post will be to determine the factors that affect fighter matchups. For some fighters, our data contains useful demographics, while for other fighters, this information is missing. One goal of this post will be to infer missing demographic data based on fighters' previous bouts. For example, if we don't know where in the world a fighter lives, we can probably determine their location with good accuracy if all their fights have been against people from the same region.
 
-
+<!--more-->
 
 The data that we will primarily work with was collected seperately for each fighter. We will first combine fighters' data into a single table that can be more easily used.
 
