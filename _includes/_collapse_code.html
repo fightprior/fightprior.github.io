@@ -1,0 +1,25 @@
+<script type="text/javascript">
+// For each code block, hide the output and generate a button that reveals the code
+var code_block = document.getElementsByClassName("highlight");
+var i;
+
+for (i = 0; i < code_block.length; i++) {
+    code_block[i].classList.toggle("hide");
+    
+    newcomment = document.createElement('div');
+    newcomment.innerHTML = '<button class="accordion">Show Code</button>';
+    code_block[i].parentNode.insertBefore(newcomment, code_block[i]);
+}
+
+// When button is pressed, show corresponding code block
+var acc = document.getElementsByClassName("accordion");
+var code_block = document.getElementsByClassName("highlight");
+var i;
+    
+for (i = 0; i < acc.length; i++) {
+    acc[i].onclick = function(){
+        this.classList.toggle("hide");
+        this.parentNode.nextElementSibling.classList.remove("hide");
+    }
+}
+</script>

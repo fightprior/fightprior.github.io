@@ -22,7 +22,7 @@ Our current focus areas are:
 
 ## People
 
-Fight Prior was created and is edited by [Sean Hackett](http://shackett.github.io/) and John Storey.  Sean has a purple belt in Brazilian Jiu-Jitsu and a PhD in Quantitative and Computational Biology. ... John is ...
+Fight Prior was created and is edited by [Sean Hackett](http://shackett.org/) and [John Storey](http://jdstorey.github.io).  Sean has a purple belt in Brazilian Jiu-Jitsu and a PhD in Quantitative and Computational Biology. John is a professor of genomics and statistics and a fan of combat sports such as MMA and hockey.
 
 ## Why *Fight Prior*
 
