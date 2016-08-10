@@ -40,17 +40,21 @@ ul.share-buttons li{
  */
  
  button.accordion {
-    background-color: #ff4000;
+    background-color: #f9f9f9;
     color: #444;
     cursor: pointer;
-    padding: 10px;
-    width: 30%;
-    border: 3px;
+    padding: 8px;
+    border-style: solid;
+    border-color: #ac4142; 
+    border-width: 3px;
     text-align: center;
     outline: none;
-    font-size: 15px;
+    font-size: 20px;
     transition: 0.4s;
     display: block;
+    margin:0 auto; /* center box */
+    margin-bottom: 10px;
+    margin-top: 10px;
 }
 
 button.accordion.hide {
