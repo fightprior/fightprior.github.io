@@ -7,7 +7,7 @@ comments: true
 tags: [database, treemaps]
 ---
 
-In my [last post]({{ site.url }}/2016/04/29/scrapingMMA/), I discussed how it was possible to extract match-level summaries of more than 240,000 unique MMA bouts between 143,602 fighters. In this entry, I will discuss how data from individual webpages can be combined into a single table with comparable entries. I will then show some high-leve
+In my [last post]({{ site.url }}/2016/04/29/scrapingMMA/), I discussed how it was possible to extract match-level summaries of more than 240,000 unique MMA bouts between 143,602 fighters. In this entry, I will discuss how data from individual webpages can be combined into a single table with comparable entries. I will then show some high-level summaries of how fights are finished.
 
 <!--more-->
 
