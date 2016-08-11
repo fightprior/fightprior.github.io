@@ -15,9 +15,6 @@
     
   </title>
 
-  <!-- Format collapsible code blocks -->
-  <script src="http://127.0.0.1:4000/public/js/collapse_code.js"></script>
-
   <!-- MathJax -->
   <script type="text/javascript"
     src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
@@ -108,6 +105,28 @@
   
   <div class="post">
     <h2 class="post-title">
+      <a href="http://127.0.0.1:4000/2016/08/11/Building_mySQL_fight_db/">
+        Building a large database of MMA fight results IV: turning tables into a database with R and SQL
+      </a>
+    </h2>
+
+    <span class="post-date">11 Aug 2016</span>
+
+    <p>Previously, I discussed acquiring and standardizing a compendium of fighter and fight-level MMA results.</p>
+
+<ul>
+  <li><a href="http://127.0.0.1:4000/2016/04/29/scrapingMMA/">I: Scraping fighter and fight data</a>: Aggregating data from ~250,000 MMA fights between ~140,000 fighters.</li>
+  <li><a href="http://127.0.0.1:4000/2016/05/05/summarizingFights/">II: Cleaning up fight-level data</a>: summarizing the major ways that fights are won.</li>
+  <li><a href="http://127.0.0.1:4000/2016/05/13/summarizingFighters/">III: Cleaning up fighter-level data</a>: summarizing where fighters are from and major weight classes.</li>
+</ul>
+
+<p>In this post, I will go over how the previously created fight, fighter and event-level tables can be transformed into a MySQL database that can both be created and accessed using R.</p>
+
+
+  </div>
+  
+  <div class="post">
+    <h2 class="post-title">
       <a href="http://127.0.0.1:4000/2016/05/17/smallWorldMMA/">
         The not-so-small-world network of MMA fighters
       </a>
@@ -147,7 +166,7 @@
 
     <span class="post-date">05 May 2016</span>
 
-    <p>In my <a href="http://127.0.0.1:4000/2016/04/29/scrapingMMA/">last post</a>, I discussed how it was possible to extract match-level summaries of more than 240,000 unique MMA bouts between 143,602 fighters. In this entry, I will discuss how data from individual webpages can be combined into a single table with comparable entries. I will then show some high-leve</p>
+    <p>In my <a href="http://127.0.0.1:4000/2016/04/29/scrapingMMA/">last post</a>, I discussed how it was possible to extract match-level summaries of more than 240,000 unique MMA bouts between 143,602 fighters. In this entry, I will discuss how data from individual webpages can be combined into a single table with comparable entries. I will then show some high-level summaries of how fights are finished.</p>
 
 
   </div>

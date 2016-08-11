@@ -4,13 +4,216 @@
  <title>Fight Prior</title>
  <link href="http://127.0.0.1:4000/atom.xml" rel="self"/>
  <link href="http://127.0.0.1:4000/"/>
- <updated>2016-08-10T13:18:43-04:00</updated>
+ <updated>2016-08-11T15:30:07-04:00</updated>
  <id>http://127.0.0.1:4000</id>
  <author>
    <name>Sean Hackett and John D. Storey</name>
    <email>TBD</email>
  </author>
 
+ 
+ <entry>
+   <title>Building a large database of MMA fight results IV: turning tables into a database with R and SQL</title>
+   <link href="http://127.0.0.1:4000/2016/08/11/Building_mySQL_fight_db/"/>
+   <updated>2016-08-11T00:00:00-04:00</updated>
+   <id>http://127.0.0.1:4000/2016/08/11/Building_mySQL_fight_db</id>
+   <content type="html">&lt;p&gt;Previously, I discussed acquiring and standardizing a compendium of fighter and fight-level MMA results.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;http://127.0.0.1:4000/2016/04/29/scrapingMMA/&quot;&gt;I: Scraping fighter and fight data&lt;/a&gt;: Aggregating data from ~250,000 MMA fights between ~140,000 fighters.&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://127.0.0.1:4000/2016/05/05/summarizingFights/&quot;&gt;II: Cleaning up fight-level data&lt;/a&gt;: summarizing the major ways that fights are won.&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://127.0.0.1:4000/2016/05/13/summarizingFighters/&quot;&gt;III: Cleaning up fighter-level data&lt;/a&gt;: summarizing where fighters are from and major weight classes.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;In this post, I will go over how the previously created fight, fighter and event-level tables can be transformed into a MySQL database that can both be created and accessed using R.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;h2 id=&quot;setting-up-mysql&quot;&gt;Setting up MySQL&lt;/h2&gt;
+
+&lt;p&gt;Before we can make an MMA database we may have to setup SQL.&lt;/p&gt;
+
+&lt;p&gt;First we need to install a distribution of MySQL. For this purpose, I would recommend  &lt;a href=&quot;http://dev.mysql.com/downloads/workbench/&quot;&gt;MySQLWorkbench&lt;/a&gt;. In addition to including a distribution of MySQL that can be accessed from the command line, MySQL Workbench also has a nice, interactive interface for making SQL queries and contains other features, such as tools to make an &lt;a href=&quot;https://en.wikipedia.org/wiki/Entity%E2%80%93relationship_model&quot;&gt;Enhanced Entity-Relationship (EER) diagram&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Before we can actually start querying SQL, we need to start the local server. For OS X, I do this using the &lt;a href=&quot;https://dev.mysql.com/doc/refman/5.1/en/osx-installation-prefpane.html&quot;&gt;MySQL Preference Pane&lt;/a&gt;, which allows you to start the server from Systems Preferences.&lt;/p&gt;
+
+&lt;p&gt;Another step that may be useful is creating an alias for MySQL so that it can be more easily worked with. I did this by adding the following code to my .bash_profile.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nb&quot;&gt;alias &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;mysql&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/usr/local/mysql/bin/mysql
+&lt;span class=&quot;nb&quot;&gt;alias &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;mysqladmin&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/usr/local/mysql/bin/mysqladmin&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h2 id=&quot;setting-up-the-mma-database-using-mysql&quot;&gt;Setting up the MMA database using MySQL&lt;/h2&gt;
+
+&lt;p&gt;Once the initial setup of MySQL is complete, the next step is to create the database that we will populate with our fight data.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;mysql &lt;span class=&quot;c&quot;&gt;# login with root privileges&lt;/span&gt;
+create database MMA;
+grant all privileges on MMA.&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; to &lt;span class=&quot;s1&quot;&gt;&#39;shackett&#39;&lt;/span&gt;@&lt;span class=&quot;s1&quot;&gt;&#39;localhost&#39;&lt;/span&gt; identified by &lt;span class=&quot;s1&quot;&gt;&#39;password&#39;&lt;/span&gt;;
+flush privileges;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h2 id=&quot;populating-the-mma-database-from-r-using-rmysql&quot;&gt;Populating the MMA database from R using RMySQL&lt;/h2&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;&lt;span class=&quot;n&quot;&gt;library&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;DBI&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;library&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;RMySQL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;library&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dplyr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# Connect to the MySQL server
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;MMA_connection&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dbConnect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;MySQL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;shackett&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;password&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;password&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dbname&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;MMA&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;host&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;localhost&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# Load tables
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bouts&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;readRDS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;~/Desktop/MMA/software/data/processed_fight_data/MMA_all_bouts.Rds&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;fighters&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;readRDS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;~/Desktop/MMA/software/data/processed_fight_data/MMA_all_fighters.Rds&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;events&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;readRDS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;~/Desktop/MMA/software/data/processed_fight_data/MMA_events.Rds&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# add to mySQL database
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dbWriteTable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;MMA_connection&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;bouts&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;as.data.frame&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bouts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;row.names&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;F&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;overwrite&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;dbWriteTable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;MMA_connection&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;fighters&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;as.data.frame&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fighters&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;row.names&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;F&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;overwrite&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;dbWriteTable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;MMA_connection&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;events&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;as.data.frame&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;events&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;row.names&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;F&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;overwrite&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;dbDisconnect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;MMA_connection&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h2 id=&quot;working-with-our-sql-database-using-mysql-workbench&quot;&gt;Working with our SQL database using MySQL Workbench&lt;/h2&gt;
+
+&lt;p&gt;Now that we have piped the bouts, fighters and events into the MMA database we can start working with this dataset in SQL.&lt;/p&gt;
+
+&lt;p&gt;MySQL Workbench makes interacting with SQL queries very straightforward. For example, shown below, we can see all the results of bouts that ended in headbutts.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://127.0.0.1:4000/figure/2016-08-11-Building_mySQL_fight_db/SQL_query_ex.png&quot; alt=&quot;SQL_query_ex&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;To better understand this dataset, it would be useful to know how fields in each dataset are connected. Generally, each table will have a primary key that uniquely identifies each entry (a row). For fighters and events, a logical choice for the table’s primary key are the urls that pointed to the fighter and event’s webpage (Query and Event_link, respectively). Individual bouts entries were derived from fighters’ pages, so the table doesn’t have any great choices for a primary key. To generate a unique primary key for bouts, we can add an additional field Fight_ID that provides a unique identifier to each bout entry. We can also auto-incriment this ID such that if additional fights are added, they will automatically be provided a new unique ID.&lt;/p&gt;
+
+&lt;p&gt;Primary keys are useful because they can be used to perform summaries at the fighter/bout/event level. An even more important role for these keys is that they tell us how to combine data. For example, we have both fighter-level data and bout-level data: if we want to be able to combine these two datasets, we need a clear way of linking fighter-level data to the fighter and his/her opponent in the bouts dataset. We can accurately carry out this combination because the bouts data contains two columns, Fighter_link and Opponent_link, that serve as foreign keys; their entries map to the entries of Query in the fighters table. A similar link is provided by the Event_link in the bouts data; it maps bouts to a specific MMA event stored in the events table.&lt;/p&gt;
+
+&lt;p&gt;An EER diagram for this dataset summarizes the fields in fighters, bouts and events as well as the primary key, foreign key relationships that link them:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://127.0.0.1:4000/figure/2016-08-11-Building_mySQL_fight_db/MMA_MySQL_schema.png&quot; alt=&quot;MMA_MySQL_schema&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;querying-sql-from-r-using-dplyr&quot;&gt;Querying SQL from R using dplyr&lt;/h2&gt;
+
+&lt;p&gt;While SQL is a powerful language for querying and combining tables, if we want to analyze our database using R, it is useful to access data from within R.&lt;/p&gt;
+
+&lt;p&gt;One way that we can access our database from within R is by executing a SQL call from within R.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;&lt;span class=&quot;n&quot;&gt;MMA_connection&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dbConnect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;MySQL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;shackett&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;password&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;password&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dbname&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;MMA&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;host&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;localhost&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;SQL_query&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;SELECT Fighter, Opponent, Finish, Event
+	FROM bouts
+	WHERE Finish = &#39;Headbutt&#39;
+  ORDER by Event;&quot;&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;SQL_result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dbGetQuery&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;MMA_connection&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SQL_query&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;dbDisconnect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;MMA_connection&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;## [1] TRUE&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;&lt;span class=&quot;n&quot;&gt;kable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;head&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SQL_result&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;row.names&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;F&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;Fighter&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;Opponent&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;Finish&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;Event&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Ely Galvao&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Heleno Nunes&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Headbutt&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;BVF 11 - Circuito Brasileiro de Vale Tudo 4&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Heleno Nunes&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Ely Galvao&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Headbutt&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;BVF 11 - Circuito Brasileiro de Vale Tudo 4&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Roger Huerta&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Jeff Carlson&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Headbutt&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;EC - Best of the Best 2 - Day Event&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Jeff Carlson&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Roger Huerta&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Headbutt&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;EC - Best of the Best 2 - Day Event&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Sean Robinson&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Chris du Pont&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Headbutt&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;EFC Africa - Extreme Fighting Championship Africa 25&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;An alternative to making queries using SQL syntax is to use dplyr to set up similar select, filter, etc. commands and then fetch the data that we are interested in.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;&lt;span class=&quot;n&quot;&gt;library&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dplyr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# specify connection to database
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SQL_result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;src_mysql&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;shackett&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;password&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;password&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dbname&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;MMA&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;host&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;localhost&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;# point out which table we want
+&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;tbl&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;bouts&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;# Filtering, selecting and arranging
+&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;filter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Finish&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Headbutt&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;select&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Fighter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Opponent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Finish&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Event&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;arrange&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Event&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;# execute query, collecting the data
+&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;collect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;kable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;head&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SQL_result&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;row.names&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;F&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;Fighter&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;Opponent&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;Finish&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;Event&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Ely Galvao&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Heleno Nunes&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Headbutt&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;BVF 11 - Circuito Brasileiro de Vale Tudo 4&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Heleno Nunes&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Ely Galvao&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Headbutt&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;BVF 11 - Circuito Brasileiro de Vale Tudo 4&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Roger Huerta&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Jeff Carlson&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Headbutt&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;EC - Best of the Best 2 - Day Event&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Jeff Carlson&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Roger Huerta&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Headbutt&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;EC - Best of the Best 2 - Day Event&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Sean Robinson&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Chris du Pont&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Headbutt&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;EFC Africa - Extreme Fighting Championship Africa 25&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Now that we can cleanly combine and access fighter and fight-level data, we can dive into some deeper analyses. I have already talked about one such &lt;a href=&quot;http://127.0.0.1:4000/2016/05/17/smallWorldMMA/&quot;&gt;analysis&lt;/a&gt;: treating bouts as an undirected graph to investigate the factors affecting fighter matchups.&lt;/p&gt;
+</content>
+ </entry>
  
  <entry>
    <title>The not-so-small-world network of MMA fighters</title>
@@ -1073,7 +1276,7 @@
    <link href="http://127.0.0.1:4000/2016/05/05/summarizingFights/"/>
    <updated>2016-05-05T00:00:00-04:00</updated>
    <id>http://127.0.0.1:4000/2016/05/05/summarizingFights</id>
-   <content type="html">&lt;p&gt;In my &lt;a href=&quot;http://127.0.0.1:4000/2016/04/29/scrapingMMA/&quot;&gt;last post&lt;/a&gt;, I discussed how it was possible to extract match-level summaries of more than 240,000 unique MMA bouts between 143,602 fighters. In this entry, I will discuss how data from individual webpages can be combined into a single table with comparable entries. I will then show some high-leve&lt;/p&gt;
+   <content type="html">&lt;p&gt;In my &lt;a href=&quot;http://127.0.0.1:4000/2016/04/29/scrapingMMA/&quot;&gt;last post&lt;/a&gt;, I discussed how it was possible to extract match-level summaries of more than 240,000 unique MMA bouts between 143,602 fighters. In this entry, I will discuss how data from individual webpages can be combined into a single table with comparable entries. I will then show some high-level summaries of how fights are finished.&lt;/p&gt;
 
 &lt;!--more--&gt;
 
