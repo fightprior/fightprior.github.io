@@ -21,11 +21,11 @@
   </script>
 
   <!-- CSS -->
-  <link rel="stylesheet" href="/public/css/extras.css">
   <link rel="stylesheet" href="/public/css/poole.css">
   <link rel="stylesheet" href="/public/css/syntax.css">
   <link rel="stylesheet" href="/public/css/lanyon.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+  <link rel="stylesheet" href="/public/css/extras.css">
 
   <!-- Icons -->
   <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-precomposed.png">
@@ -109,6 +109,24 @@
   
   <div class="post">
     <h2 class="post-title">
+      <a href="http://127.0.0.1:4000/2016/09/29/finishCooccurrence/">
+        MMA styles I: grouping finishes using large-scale data
+      </a>
+    </h2>
+
+    <span class="post-date">29 Sep 2016</span>
+    <p>MMA fighters use a mixture of martial arts and the way that they win fights reflects their personal style.</p>
+
+<p>A useful way of understanding the styles of fighters is if we (1) determine the styles of individual fighters and, (2) understand the set of techniques that an individual style entails. To investigate the latter question, rather than assuming that the grouping of techniques was known (such as heel hooks and triangle chokes contributing to a BJJ game), I determined whether such groupings could naturally emerge based on how frequently finishes have been used by the same fighters (i.e. do fighters who win with armbars tend to win with triangle chokes?)</p>
+
+<p>Using data from ~120,000 wins across 35,000 fighters, I determined how frequently each pair of <a href="http://127.0.0.1:4000/2016/05/05/summarizingFights/">50 common finishes</a> was used by the same fighters relative to chance, allowing me to identify ~300 pairs of finishes that are commonly used together by fighters. These finish pairs can be used to more broadly organize finishes, grouping finishes that share similar partners.</p>
+
+
+    <center><a href="http://127.0.0.1:4000/2016/09/29/finishCooccurrence/">Click here to continue reading</a></center>
+  </div>
+  
+  <div class="post">
+    <h2 class="post-title">
       <a href="http://127.0.0.1:4000/2016/08/23/Win_loss_markov/">
         In MMA winners keep winning and losers keep losing
       </a>
@@ -120,7 +138,7 @@
 <p>In this post, I address one aspect of momentum in MMA: how a fighter’s performance in one fight affects their performance in their next fight. Summarizing the careers of over 150,000 fighters, I see that wins at any stage of a fighter’s career are an indicator of future success, while early losses are often enough to force a fighter to rethink their MMA dreams.</p>
 
 
-    <center><a href="http://127.0.0.1:4000/2016/08/23/Win_loss_markov/">Show More</a></center>
+    <center><a href="http://127.0.0.1:4000/2016/08/23/Win_loss_markov/">Click here to continue reading</a></center>
   </div>
   
   <div class="post">
@@ -142,7 +160,7 @@
 <p>In this post, I will go over how the previously created fight, fighter and event-level tables can be transformed into a MySQL database that can both be created and accessed using R.</p>
 
 
-    <center><a href="http://127.0.0.1:4000/2016/08/11/Building_mySQL_fight_db/">Show More</a></center>
+    <center><a href="http://127.0.0.1:4000/2016/08/11/Building_mySQL_fight_db/">Click here to continue reading</a></center>
   </div>
   
   <div class="post">
@@ -158,7 +176,7 @@
 <p>One way we can think about this question is that fighters will tend to compete against other fighters who are relatively similar to them. An amateur fighter may compete against fighters in his town and in neighboring towns. His opponents may do the same. While this fighter is unlikely to compete against fighters who live two towns over, he can still be said to be relatively closely connected to these fighters because they are only two jumps aways. At a broader scale, MMA fighters who are very different may be many jumps apart, seperated by large geographical barriers or other obstructions.</p>
 
 
-    <center><a href="http://127.0.0.1:4000/2016/05/17/smallWorldMMA/">Show More</a></center>
+    <center><a href="http://127.0.0.1:4000/2016/05/17/smallWorldMMA/">Click here to continue reading</a></center>
   </div>
   
   <div class="post">
@@ -174,21 +192,7 @@
 <p>In this entry, I will discuss how to clean-up fighter-level data. The main goal of this post will be to determine the factors that affect fighter matchups. For some fighters, our data contains useful demographics, while for other fighters, this information is missing. One goal of this post will be to infer missing demographic data based on fighters’ previous bouts. For example, if we don’t know where in the world a fighter lives, we can probably determine their location with good accuracy if all their fights have been against people from the same region.</p>
 
 
-    <center><a href="http://127.0.0.1:4000/2016/05/13/summarizingFighters/">Show More</a></center>
-  </div>
-  
-  <div class="post">
-    <h2 class="post-title">
-      <a href="http://127.0.0.1:4000/2016/05/05/summarizingFights/">
-        Building a large database of MMA fight results II: quantitatively summarizing over 240,000 MMA fights
-      </a>
-    </h2>
-
-    <span class="post-date">05 May 2016</span>
-    <p>In my <a href="http://127.0.0.1:4000/2016/04/29/scrapingMMA/">last post</a>, I discussed how it was possible to extract match-level summaries of more than 240,000 unique MMA bouts between 143,602 fighters. In this entry, I will discuss how data from individual webpages can be combined into a single table with comparable entries. I will then show some high-level summaries of how fights are finished.</p>
-
-
-    <center><a href="http://127.0.0.1:4000/2016/05/05/summarizingFights/">Show More</a></center>
+    <center><a href="http://127.0.0.1:4000/2016/05/13/summarizingFighters/">Click here to continue reading</a></center>
   </div>
   
 </div>

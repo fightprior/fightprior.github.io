@@ -39,7 +39,7 @@ ul.share-buttons li{
  * Formatting collapsible code blocks
  */
  
- button.accordion {
+button.accordion {
     background-color: #f9f9f9;
     color: #444;
     cursor: pointer;
@@ -71,4 +71,13 @@ figure.highlight.hide {
 }
 figure.highlight.show {
     display: block !important;
+}
+
+/*
+ * Formatting post headers
+ */
+ 
+.author-list {
+  display: block;
+  margin-bottom: 0.8rem;
 }
