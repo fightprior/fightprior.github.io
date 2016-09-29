@@ -18,4 +18,4 @@ Using data from ~120,000 wins across 35,000 fighters, I determined how frequentl
 
 From this analysis, I find that rather than grouping finishes as stand-alone sets, fnishes form a continuity of MMA styles: ranging from pure striking to pure BJJ, connected by submissions that require strong positional control. There are many fine-grain patterns in this analysis. For example, all BJJ submissions that target the legs are tightly intermingled; if someone is dangerous with ankle locks, he/she is also dangerous with heel hooks.
 
-If you are interested in better understanding the computational and statistical elements of this analysis, see the [Full Quantitative Analysis]({{ site.url }}/2016/09/29/finishCooccurence).
+If you are interested in better understanding the computational and statistical elements of this analysis, see the [Full Quantitative Analysis]({{ site.url }}/2016/09/29/finishCooccurrence).
