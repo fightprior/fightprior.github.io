@@ -1,23 +1,21 @@
 ---
 title: "MMA styles II: ranking the top striking, submission and decision specialists"
-description: "Constructing a network of MMA fighting styles"
+description: "A hierarchical Dirichlet-Multinomial model of winning style preferences"
 author: sean
 layout: post
 comments: true
-tags: [R, MCMC, styles]
+tags: [R, MCMC, mixed-membership, styles]
 ---
 
-Ranking athletes is a common problem across all sports. In Mixed Martial Arts (MMA), one of the most popular ways of summarizing fighters is based on their primary method of winning. The major winning methods are: (1) TKO/KO: a fighter uses punches, kicks, etc. to either incapacitate the opponent (KO) or force a stoppage (TKO), (2) Submission: through chokes or joint locks a fighter forces his/her opponent to tap out, (3) Decision: the fight goes its full length and a panel of judges declare the winner.
+Ranking athletes is a common problem across all sports. In Mixed Martial Arts (MMA), one of the most popular ways of summarizing fighters is based on their primary method of winning. The major winning methods are: (1) KO/TKO: a fighter uses punches, kicks, etc. to either incapacitate the opponent (KO) or force a stoppage (TKO), (2) Submission: through chokes or joint locks a fighter forces his/her opponent to tap out, (3) Decision: the fight goes its full length and a panel of judges declare the winner.
 
 The relative value of these three win methods is an important summary of a fighter's style which is both reported by [UFC's pre-fight summary](http://www.ufc.com/schedule/event) and is one of [Sherdog's main summaries of a fighter](http://www.sherdog.com/fighter/Andrei-Arlovski-270). Despite the importance of win method preference for summarizing fighters, it is difficult to rank fighters by their method preferences (the % of all wins by each method); using this metric, amateur fighters (with few wins to date) will often appear to be more specialized than experienced fighters. For example, a fighter who has won 3/3 times using strikes would appear to exclusively win by striking, while a fighter with 49/50 wins by striking would seem less specialized. Clearly, the latter fighter is probably a stronger striker because he/she has repeatedly demonstrated this preference, whereas there is more uncertainty about the former fighter.
 
-Here, I formalize this intuition by balancing fighter-specific results with patterns across fighters using a statistical approach based on empirical Bayesian analysis: a hierarchical Dirichlet-Multinomial model. Using this approach, I can fairly rank fighters accounting for their variable experience. Based on these experience-corrected rankings, Conor McGregor and Cris Cyborg are among the top 10 striking specialists in the UFC. Overall, the fighter who most reliably wins by KO/TKO is K1 veteran Melvin Manhoef. Ronda Rousey and Dominick Cruz are top 10 in the UFC for winning by submission and decision, respectively.
+Here, I formalize this intuition by balancing fighter-specific results with patterns across fighters using a statistical approach based on empirical Bayesian analysis: a hierarchical Dirichlet-Multinomial model. Using this approach, I can fairly rank fighters accounting for their variable experience. Based on these experience-corrected rankings, Conor McGregor and Cris Cyborg are among the top 10 striking specialists in the UFC (K1 veteran Melvin Manhoef is top overall). Ronda Rousey and Dominick Cruz are top 10 in the UFC for winning by submission and decision, respectively.
 
 ![Fighter Win Method Rankings]({{ site.url }}/figure/source/2016-12-20-rankingMethods/method_table-1.png){: .align-center }
 
 <!--more-->
-
-My full quantitative analysis of this problem follows:
 
 ## Summarizing Raw Data
 
@@ -52,18 +50,18 @@ knitr::kable(fighter_win_methods %>%
 
 
 
-|Fighter_link                      | Decision| KO/TKO| Submission|
-|:---------------------------------|--------:|------:|----------:|
-|/fighter/Kevin-Zalac-37937        |        2|      4|          4|
-|/fighter/Micol-DiSegni-171627     |        4|      0|          1|
-|/fighter/William-Kassulker-61219  |        0|      1|          3|
-|/fighter/Denis-Silva-159537       |        2|      3|          2|
-|/fighter/Enrique-Diarte-101923    |        0|      3|          1|
-|/fighter/Juergen-Dolch-37794      |        1|      2|          1|
-|/fighter/Gilcimar-de-Jesus-114099 |        1|      4|          0|
-|/fighter/Isaac-Villanueva-41384   |        2|      9|          0|
-|/fighter/Gi-Bum-Moon-139205       |        3|      1|          0|
-|/fighter/Kassim-Annan-3159        |        0|      2|          8|
+|Fighter_link                            | Decision| KO/TKO| Submission|
+|:---------------------------------------|--------:|------:|----------:|
+|/fighter/Jon-Hill-38397                 |        0|     10|          2|
+|/fighter/Povilas-Markevicius-4340       |        1|      0|          4|
+|/fighter/Jarrett-Wainohu-62716          |        1|      1|          2|
+|/fighter/Niko-Lohmann-43694             |        0|      1|          5|
+|/fighter/Yuichiro-Yajima-12923          |        0|      2|         17|
+|/fighter/Glauber-Duncan-Santiago-174139 |        2|      0|          2|
+|/fighter/Josh-Tyler-73391               |        2|      1|          4|
+|/fighter/Petr-Vacek-85491               |        2|      2|          1|
+|/fighter/Mike-Marrello-17807            |        5|      1|          8|
+|/fighter/Alfred-Khashakyan-133919       |        0|      8|          0|
 
 To start thinking about how to analyze this data, it is useful to do some exploratory visualization. Because I am interested in each fighter's relative investment in the three methods (KO/TKO, Submission, Decision), ternary diagrams are an attractive visualization approach. Ternary diagrams plot the relative value of three categories (e.g. \\(x, y, z\\)), constrained to sum to one (\\(x + y + z = 1\\)), within a triangle where proximity to each corner indicates the relative affinity for that category. I will use a ternary diagram to visualize each fighter's counts of KO/TKO, submissions and decisions normalized to the sum of these three variables. I also stratify the partitions of fighters based upon experience (# of fights informing the estimate).
 
@@ -105,32 +103,33 @@ dks_partition_counts <- dks_partition_counts %>%
 
 ggtern(dks_partition_counts, aes(x = Dec, y = `KO/TKO`, z = Sub, color = n)) +
   geom_mask() +
-  geom_point(size = 1) +
+  geom_point(size = 1.2) +
   facet_wrap(~ bin, ncol = 2) +
   scale_color_continuous("Number of fighters\nwith value", low = "royalblue1", high = "red", trans = "log10") +
   suppressWarnings(limit_tern(1.05, 1.05, 1.05)) +
-  theme(text = element_text(size = 20))
+  theme(text = element_text(size = 22))
 {% endhighlight %}
 
 <img src="/figure/source/2016-12-20-rankingMethods/unnamed-chunk-2-1.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" style="display: block; margin: auto;" />
 
 There are only a small number of distinct combinations of methods that an inexperienced fighters could have won by (\\(3^{n}\\)). Accordingly, many fighters have either exclusively won by a single method or have won by only two of the three possible methods. Transitioning to more experienced fighters, most fighters have a method proportion that is not on the boundary of the ternary diagram. For these experienced fighters, observed method proportions should be a fairly accurate estimate of a fighter's future win methods. That is, observed method proportions accurately estimate \\(\Pr(\text{Method\|Fighter})\\). The method proportions of inexperienced fighters are more dubious predictors of this quantity because they overfit to observed win methods, thereby discounting that considerable uncertainty about these fighters exists. 
 
-To allow for fair estimation of fighters' method preferences (\\(\Pr(\text{Method\|Fighter})\\)) without regard to their level of experience, we can balance fighter-specific data with broader trends across fighters by estimating the distribution of methods \\(\Pr(\text{Method}\\) and utilizing this as a prior on the fighter-specific estimates. This prior will encompass both how common each method is and the extent to which fighters are method specialists (residing near the corners of the ternary diagram) or generalists (residing near the center of the ternary diagram).
+To allow for fair estimation of fighters' method preferences (\\(\Pr(\text{Method\|Fighter})\\)) without regard to their level of experience, we can balance fighter-specific data with broader trends across fighters by estimating the distribution of methods (\\(\Pr(\text{Method})\\)) and utilizing this as a prior on the fighter-specific estimates. This prior will encompass both how common each method is and the extent to which fighters are method specialists (residing near the corners of the ternary diagram) or generalists (residing near the center of the ternary diagram).
 
 ## Sharing information across fighters using a hierarchical model
 
 Fighters' win methods can be summarized by the \\(I \times K\\) matrix \\(\mathbf{N}\\) containing counts of each win method (\\(k \in 1, 2, 3\\)) by each fighter (\\(i \in 1, 2, ..., I\\)). These counts can be thought of as drawn from fighter-specific Multinomial distributions parameterized by \\(\theta_{i.}\\). The Multinomial distribution is frequently used to represent data like dice rolls, but we generally don't assume that each side is equally prevalent; instead, we are interested in estimating side probabilities. Due to the nature of this data, \\(\theta\\)s sum to 1 across the \\(K = 3\\) categories for each fighter \\(i\\), and \\(\theta_{ik}\\) equals the expected probability of the \\(k\\)th method for the \\(i\\)th fighter. In order to share information across fighters, we assume that these fighter-specific proportions are drawn from a single prior distribution. (This is why it's called a hierarchical model.) A logical prior to place on the multinomially distributed fighter data is a Dirichlet distribution. Because the Dirichlet distribution is a conjugate prior to the Multinomial, the distributions can be cleanly combined to generate a closed form solution for the posterior (which will be the same distribution as the prior).
 
 $$
-n_{i.} \sim \text{Multi}(\theta_{i.}, \sum{n.})\\
+n_{i.} \sim \text{Multi}(\theta_{i.}, \sum{n_{i.}})\\
 \theta_{i.} \sim \text{Dir}(\alpha_{1}, \alpha_{2}, \alpha_{3})
 $$
-This hierarchical Dirichlet-Multinomial relationship combines the Multinomial, which behaves similar to the ternary summary above, with the Dirichlet which will add pseudocounts of \\(\alpha_{k}\\) to the \\(n_{ik}\\) of each fighter \\(i\\). Adding the \\(\alpha\\) pseudocounts to an inexperienced fighter will shrink their estimated \\(\Pr(\text{Method\|Fighter})\\) towards the overall frequency of methods, while this addition will not greatly impact an experienced fighter with a large amount of data.
 
-To further clarify how the Multinomial and Dirichlet will work together, we can consider that the Dirichlet-Multinomial distribution is a generalization of the Beta-Binomial to an arbitrary number of categories, \\(K\\). The Beta-Binomial distribution considers just two categories, like with a coin flip. For a good resource on this distribution, Dave Robinson has nicely explained the importance of applying a Beta prior on Binomial baseball batting data (hits/total pitches) on [his blog](http://varianceexplained.org/r/empirical_bayes_baseball/). As another example of Beta-Binomial, we can consider estimating a coin's \\(\Pr(\text{heads})\\). If we flip a single coin 20 times and obtain 15 heads and 5 tails, the observed \\(\Pr(\text{heads})\\) is pretty far from the fair expectation (i.e. \\(\Pr(\text{heads}) = 0.5\\)). But, we should also assume that most coins are fair unless the data strongly overrules our assumption. Because of our strong prior assumptions regarding the behavior of coins, we should put a Beta prior on \\(\Pr(\text{heads\|flips})\\) with fairly big parameters (lets say that its parameters \\(\alpha\\) and \\(\beta\\), which are equivalent to the \\(\alpha\\) parameters in the Dirichlet-Multinomial, are each 10). Because of the form of the Beta-Binomial, when we combine the prior and posterior, our posterior estimate of \\(\Pr(\text{heads\|flips})\\) will have an expectation of \\(\frac{H + \alpha}{H + \alpha + T + \beta} = \frac{15 + 10}{15 + 10 + 5 + 10} = 0.625\\). Thus, we have shrunken our small amount of data on a single coin towards the behavior of coins overall.
+This hierarchical Dirichlet-Multinomial relationship combines the Multinomial, which behaves like rolling a weighted \\(K\\) sided die, with the Dirichlet which adds $\alpha_{k}$ pseudocounts to each fighter's record's count of that method. Adding the \\(\alpha\\) pseudocounts to an inexperienced fighter will shrink their estimated \\(\Pr(\text{Method\|Fighter})\\) towards the overall frequency of methods, while this addition will not greatly impact an experienced fighter with a large amount of data.
 
-One of the cool things about conjugate distributions like the Beta-Binomial and Dirichlet-Multinomial is that we can cleanly combine the prior and likelihood (of data, having assumed parameters), updating our prior belief based upon data. So, if we had some strong belief about the values of $\alpha$, then we could update our estimate of \\(\Pr(\text{Method\|Fighter})\\), encompassing this prior belief (the form of this update will be very similar to the coin example). Another cool property of the Dirichlet-Multinomial is that if we do not know the \\(\alpha\\)s values and instead want to estimate these prior hyperparameters, we can integrate over fighter's \\(\theta\\)s so that we can directly relate the support for our observed data (\\(N\\)) given the hyperparameters on our prior (\\(\alpha\\)s).
+To further clarify how the Multinomial and Dirichlet will work together, we can consider that the Dirichlet-Multinomial distribution is a generalization of the Beta-Binomial from two categories (e.g. yes and no) to an arbitrary number of categories, \\(K\\). For a good resource on this distribution, Dave Robinson has nicely explained the importance of applying a Beta prior on Binomial baseball batting data (hits/total pitches) on [his blog](http://varianceexplained.org/r/empirical_bayes_baseball/). As another example of Beta-Binomial, we can consider estimating a coin's \\(\Pr(\text{heads})\\). If we flip a single coin 20 times and obtain 15 heads and 5 tails, the observed \\(\Pr(\text{heads})\\) is pretty far from the fair expectation (i.e. \\(\Pr(\text{heads}) = 0.5\\)). But, we should also assume that most coins are fair unless the data strongly overrules our assumption. Because of our strong prior assumptions regarding the behavior of coins, we should put a Beta prior on \\(\Pr(\text{heads\|flips})\\) with fairly big parameters (lets say that its parameters \\(\alpha\\) and \\(\beta\\), which are equivalent to the \\(\alpha\\) parameters in the Dirichlet-Multinomial, are each 10). Because of the form of the Beta-Binomial, when we combine the prior and posterior, our posterior estimate of \\(\Pr(\text{heads\|flips})\\) will have an expectation of \\(\frac{H + \alpha}{H + \alpha + T + \beta} = \frac{15 + 10}{15 + 10 + 5 + 10} = 0.625\\). Thus, we have shrunken our small amount of data on a single coin towards the behavior of coins overall.
+
+One of the cool things about conjugate distributions like the Beta-Binomial and Dirichlet-Multinomial is that we can cleanly combine the prior and likelihood (of data, having assumed parameters), updating our prior belief based upon data. So, if we had some strong belief about the values of \\(\alpha\\), then we could update our estimate of \\(\Pr(\text{Method\|Fighter})\\), encompassing this prior belief (the form of this update will be very similar to the coin example). Another cool property of the Dirichlet-Multinomial is that if we do not know the \\(\alpha\\) values and instead want to estimate these prior hyperparameters, we can integrate over fighter's \\(\theta\\)s so that we can directly relate the support for our observed data (\\(N\\)) given the hyperparameters on our prior (\\(\alpha\\)s).
 
 $$
 \Pr(\mathbf{N}|\mathbf{\alpha}) = \int_{\Theta}\Pr(\mathbf{N}|\Theta)Pr(\Theta|\mathbf{\alpha})d\Theta\\
@@ -139,7 +138,8 @@ $$
 \log(\Pr(\mathbf{N}|\mathbf{\alpha})) = I\left[\log(\Gamma(A)) -\sum_{k=1}^{K}\log(\Gamma(\alpha_{k}))\right] +
 \sum_{i}\left[- \log(\Gamma(N_{i} + A)) + \sum_{k=1}^{K}\log(\Gamma(n_{ik} + \alpha_{k}))\right]
 $$
-Here, \\(A = \sum_{k}^{K}\alpha\\) and \\(N_{i} = \sum_{k}^{K}n_{ik}\\). The second step is a known property of the Dirichlet-Multinomial. The third step log-transforms the marginal joint probability such that individual terms in the expression can be separately calculated without worrying about the product numerically rounding to zero. The fourth step refactors the summation so that it can be easily calculated during optimization. From this final expression, it is straightforward to determine the overall probability of our dataset for a given set of $\alpha$ parameters. To instead determine optimal \\(\alpha\\) values given the dataset (the inverse problem), different sets of \\(\alpha\\) values can be proposed and evalutated using Markov Chain Monte Carlo (MCMC) in order to hone in on values of \\(\alpha\\) that best agree with our observed data.
+
+Here, \\(A = \sum_{k}^{K}\alpha\\) and \\(N_{i} = \sum_{k}^{K}n_{ik}\\). The second step is a known property of the Dirichlet-Multinomial. The third step log-transforms the marginal joint probability such that individual terms in the expression can be separately calculated without worrying about the product numerically rounding to zero. The fourth step refactors the summation so that it can be easily calculated during optimization. From this final expression, it is straightforward to determine the overall probability of our dataset for a given set of \\(\alpha\\) parameters. To instead determine optimal \\(\alpha\\) values given the dataset (the inverse problem), different sets of \\(\alpha\\) values can be proposed and evalutated using Markov Chain Monte Carlo (MCMC) in order to hone in on values of \\(\alpha\\) that best agree with our observed data.
 
 ## Solving for prior parameters using MCMC
 
@@ -178,7 +178,7 @@ alphas_current <- tibble::data_frame(Method = unique(fighter_win_methods$Method)
   dplyr::mutate(alpha = rgamma(n = n(), shape = gamma_shape, rate = gamma_rate))
 current_logLik <- multi_dirich_logLik(fighter_total_counts, fighter_method_counts, alphas_current)
 
-n_steps <- 5000
+n_steps <- 4000
 
 logLik_track <- rep(NA, floor(n_steps/20))
 alpha_track <- list()
@@ -232,18 +232,18 @@ method_breakdown <- alpha_posterior %>%
       dplyr::select(-n),
     by = "Method")
 
-knitr::kable(method_breakdown, digits = 3)
+knitr::kable(method_breakdown %>% dplyr::select(Method, `Method Proportion` = Method_fraction, alpha, `alpha Proportion` = alpha_frac) , digits = 3)
 {% endhighlight %}
 
 
 
-|Method     | alpha| sample|    logLik| alpha_frac| Method_fraction|
-|:----------|-----:|------:|---------:|----------:|---------------:|
-|Decision   | 1.275|     63| -158636.4|      0.262|           0.234|
-|KO/TKO     | 1.620|     63| -158636.4|      0.332|           0.334|
-|Submission | 1.977|     63| -158636.4|      0.406|           0.432|
+|Method     | Method Proportion| alpha| alpha Proportion|
+|:----------|-----------------:|-----:|----------------:|
+|Decision   |             0.234| 1.273|            0.261|
+|KO/TKO     |             0.334| 1.617|            0.332|
+|Submission |             0.432| 1.979|            0.406|
 
-Using MCMC I generated a distribution of \\(\alpha\\) parameter sets. From these samples, for the sake of convenience, I chose the MAP (the maximum posterior probability) estimate as a single consensus set of \\(\alpha\\) values. Inspecting the values of the MAP \\(\alpha\\)s, \\(\alpha_{k}/\sum \alpha\\) values are similar to \\(\frac{\sum_{i}n_{ik}}{\sum_{ik}n_{ik}}\\). This reveals that our prior has a similar shape to the popularity of individual methods, thereby adding weights of method to a fighter's record based on the frequency of this method overall. The total magnitude of these \\(\alpha\\)s, 5, indicates how many total fights are effectively added to each fighter's career.
+Using MCMC I generated a distribution of \\(\mathbf{\alpha}\\) parameter sets. From these samples, for the sake of convenience, I chose the MAP (the maximum posterior probability) estimate as a single consensus set of \\(\alpha\\) values. Inspecting the values of the MAP \\(\alpha\\)s, \\(\alpha_{k}/\sum \alpha\\) values are similar to \\(\frac{\sum_{i}n_{ik}}{\sum_{ik}n_{ik}}\\). This reveals that our prior has a similar shape to the popularity of individual methods, thereby adding weights of method to a fighter's record based on the frequency of this method overall. The total magnitude of these \\(\alpha\\)s, 4.87, indicates how many total fights are effectively added to each fighter's career.
 
 ### Estimating \\(\Pr(\text{Method\|Fighter})\\)
 
@@ -306,6 +306,7 @@ ranking_plot <- ggplot(data = top_fighter_stats %>%
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
         panel.grid.major.x = element_line(size = 0.5, color = "gray70"),
+        axis.ticks.x = element_line(size = 0.5, color = "gray70"),
         strip.text = element_text(size = 24),
         title = element_text(size = 24),
         axis.text.y = element_blank(),
@@ -358,11 +359,11 @@ ggtern(value_grid, aes(x = Dec, y = `KO/TKO`, z = Sub)) +
   # background Pr distribution
   geom_point_swap(aes(fill = Pr_method)) +
   # Pr(method) for individual fighters
-  geom_point(data = method_breakdown_summary, aes(color = n), size = 0.3) +
+  geom_point(data = method_breakdown_summary, aes(color = n), size = 1) +
   scale_fill_gradientn("Pr(Method)", colors = c("gray90", "orange", "red")) +
   facet_wrap(~ bin, ncol = 2) +
   scale_color_continuous("Number of fighters\nwith value", low = "darkslategray1", high = "royalblue1", trans = "log10") +
-  theme(text = element_text(size = 20))
+  theme(text = element_text(size = 22))
 {% endhighlight %}
 
 <img src="/figure/source/2016-12-20-rankingMethods/unnamed-chunk-3-1.png" title="plot of chunk unnamed-chunk-3" alt="plot of chunk unnamed-chunk-3" style="display: block; margin: auto;" />

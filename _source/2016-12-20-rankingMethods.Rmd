@@ -49,7 +49,7 @@ knitr::kable(fighter_win_methods %>%
 
 To start thinking about how to analyze this data, it is useful to do some exploratory visualization. Because I am interested in each fighter's relative investment in the three methods (KO/TKO, Submission, Decision), ternary diagrams are an attractive visualization approach. Ternary diagrams plot the relative value of three categories (e.g. \\(x, y, z\\)), constrained to sum to one (\\(x + y + z = 1\\)), within a triangle where proximity to each corner indicates the relative affinity for that category. I will use a ternary diagram to visualize each fighter's counts of KO/TKO, submissions and decisions normalized to the sum of these three variables. I also stratify the partitions of fighters based upon experience (# of fights informing the estimate).
 
-```{r fig.height = 9, fig.width = 12}  
+```{r fig.height = 11, fig.width = 15}  
 # visualize raw method counts
 
 fighter_mle <- fighter_win_methods %>%
@@ -86,11 +86,11 @@ dks_partition_counts <- dks_partition_counts %>%
 
 ggtern(dks_partition_counts, aes(x = Dec, y = `KO/TKO`, z = Sub, color = n)) +
   geom_mask() +
-  geom_point(size = 1) +
+  geom_point(size = 1.2) +
   facet_wrap(~ bin, ncol = 2) +
   scale_color_continuous("Number of fighters\nwith value", low = "royalblue1", high = "red", trans = "log10") +
   suppressWarnings(limit_tern(1.05, 1.05, 1.05)) +
-  theme(text = element_text(size = 20))
+  theme(text = element_text(size = 22))
 ```
 
 There are only a small number of distinct combinations of methods that an inexperienced fighters could have won by (\\(3^{n}\\)). Accordingly, many fighters have either exclusively won by a single method or have won by only two of the three possible methods. Transitioning to more experienced fighters, most fighters have a method proportion that is not on the boundary of the ternary diagram. For these experienced fighters, observed method proportions should be a fairly accurate estimate of a fighter's future win methods. That is, observed method proportions accurately estimate \\(\Pr(\text{Method\|Fighter})\\). The method proportions of inexperienced fighters are more dubious predictors of this quantity because they overfit to observed win methods, thereby discounting that considerable uncertainty about these fighters exists. 
@@ -158,7 +158,7 @@ alphas_current <- tibble::data_frame(Method = unique(fighter_win_methods$Method)
   dplyr::mutate(alpha = rgamma(n = n(), shape = gamma_shape, rate = gamma_rate))
 current_logLik <- multi_dirich_logLik(fighter_total_counts, fighter_method_counts, alphas_current)
 
-n_steps <- 5000
+n_steps <- 4000
 
 logLik_track <- rep(NA, floor(n_steps/20))
 alpha_track <- list()
@@ -277,6 +277,7 @@ ranking_plot <- ggplot(data = top_fighter_stats %>%
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
         panel.grid.major.x = element_line(size = 0.5, color = "gray70"),
+        axis.ticks.x = element_line(size = 0.5, color = "gray70"),
         strip.text = element_text(size = 24),
         title = element_text(size = 24),
         axis.text.y = element_blank(),
@@ -290,7 +291,7 @@ ranking_plot
 
 From the previous visualization of ternary diagrams, it was clear that inexperienced fighters were overfitted to their limited number of win methods. To see the effect of the above Bayesian analysis, I will again show the updated fighter method probabilities, laid upon the prior probability density. This prior can be thought of as representing the values that an individual fighter's method probabilities can take (it is a distribution of distributions).
 
-```{r fig.height = 9, fig.width = 12}
+```{r fig.height = 11, fig.width = 15}
 # summarize distribution of Pr(methods)
 value_grid <- expand.grid(x = seq(0, 1, by = 0.01), y = seq(0, 1, by = 0.01)) %>%
   dplyr::mutate(z = 1 - x - y) %>%
@@ -326,11 +327,11 @@ ggtern(value_grid, aes(x = Dec, y = `KO/TKO`, z = Sub)) +
   # background Pr distribution
   geom_point_swap(aes(fill = Pr_method)) +
   # Pr(method) for individual fighters
-  geom_point(data = method_breakdown_summary, aes(color = n), size = 0.5) +
+  geom_point(data = method_breakdown_summary, aes(color = n), size = 1) +
   scale_fill_gradientn("Pr(Method)", colors = c("gray90", "orange", "red")) +
   facet_wrap(~ bin, ncol = 2) +
   scale_color_continuous("Number of fighters\nwith value", low = "darkslategray1", high = "royalblue1", trans = "log10") +
-  theme(text = element_text(size = 20))
+  theme(text = element_text(size = 22))
 ```
 
 In MMA, a large amount of data exists when pooling across fighters, but there is a more modest amount of fighter-specific data. By finding an empirical prior on method probabilities, fighters' win methods were balanced with common trends across fighters. Inexperienced fighters are pulled towards a consensus of fighters, while experienced fighters are barely influenced by the prior. This will be an important element of future approaches, where instead of considering methods as a component of style, I will identify elements of style in a data-driven manner, capitalizing on [common patterns in MMA finishes]({{ site.url }}/2016/09/29/finishCooccurrence/).

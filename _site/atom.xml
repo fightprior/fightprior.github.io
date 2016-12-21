@@ -4,7 +4,7 @@
  <title>Fight Prior</title>
  <link href="http://127.0.0.1:4000/atom.xml" rel="self"/>
  <link href="http://127.0.0.1:4000/"/>
- <updated>2016-12-20T19:27:23-05:00</updated>
+ <updated>2016-12-20T23:06:10-05:00</updated>
  <id>http://127.0.0.1:4000</id>
  <author>
    <name>Sean Hackett and John D. Storey</name>
@@ -17,17 +17,15 @@
    <link href="http://127.0.0.1:4000/2016/12/20/rankingMethods/"/>
    <updated>2016-12-20T00:00:00-05:00</updated>
    <id>http://127.0.0.1:4000/2016/12/20/rankingMethods</id>
-   <content type="html">&lt;p&gt;Ranking athletes is a common problem across all sports. In Mixed Martial Arts (MMA), one of the most popular ways of summarizing fighters is based on their primary method of winning. The major winning methods are: (1) TKO/KO: a fighter uses punches, kicks, etc. to either incapacitate the opponent (KO) or force a stoppage (TKO), (2) Submission: through chokes or joint locks a fighter forces his/her opponent to tap out, (3) Decision: the fight goes its full length and a panel of judges declare the winner.&lt;/p&gt;
+   <content type="html">&lt;p&gt;Ranking athletes is a common problem across all sports. In Mixed Martial Arts (MMA), one of the most popular ways of summarizing fighters is based on their primary method of winning. The major winning methods are: (1) KO/TKO: a fighter uses punches, kicks, etc. to either incapacitate the opponent (KO) or force a stoppage (TKO), (2) Submission: through chokes or joint locks a fighter forces his/her opponent to tap out, (3) Decision: the fight goes its full length and a panel of judges declare the winner.&lt;/p&gt;
 
 &lt;p&gt;The relative value of these three win methods is an important summary of a fighter’s style which is both reported by &lt;a href=&quot;http://www.ufc.com/schedule/event&quot;&gt;UFC’s pre-fight summary&lt;/a&gt; and is one of &lt;a href=&quot;http://www.sherdog.com/fighter/Andrei-Arlovski-270&quot;&gt;Sherdog’s main summaries of a fighter&lt;/a&gt;. Despite the importance of win method preference for summarizing fighters, it is difficult to rank fighters by their method preferences (the % of all wins by each method); using this metric, amateur fighters (with few wins to date) will often appear to be more specialized than experienced fighters. For example, a fighter who has won 3/3 times using strikes would appear to exclusively win by striking, while a fighter with 49/50 wins by striking would seem less specialized. Clearly, the latter fighter is probably a stronger striker because he/she has repeatedly demonstrated this preference, whereas there is more uncertainty about the former fighter.&lt;/p&gt;
 
-&lt;p&gt;Here, I formalize this intuition by balancing fighter-specific results with patterns across fighters using a statistical approach based on empirical Bayesian analysis: a hierarchical Dirichlet-Multinomial model. Using this approach, I can fairly rank fighters accounting for their variable experience. Based on these experience-corrected rankings, Conor McGregor and Cris Cyborg are among the top 10 striking specialists in the UFC. Overall, the fighter who most reliably wins by KO/TKO is K1 veteran Melvin Manhoef. Ronda Rousey and Dominick Cruz are top 10 in the UFC for winning by submission and decision, respectively.&lt;/p&gt;
+&lt;p&gt;Here, I formalize this intuition by balancing fighter-specific results with patterns across fighters using a statistical approach based on empirical Bayesian analysis: a hierarchical Dirichlet-Multinomial model. Using this approach, I can fairly rank fighters accounting for their variable experience. Based on these experience-corrected rankings, Conor McGregor and Cris Cyborg are among the top 10 striking specialists in the UFC (K1 veteran Melvin Manhoef is top overall). Ronda Rousey and Dominick Cruz are top 10 in the UFC for winning by submission and decision, respectively.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;http://127.0.0.1:4000/figure/source/2016-12-20-rankingMethods/method_table-1.png&quot; alt=&quot;Fighter Win Method Rankings&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
 
 &lt;!--more--&gt;
-
-&lt;p&gt;My full quantitative analysis of this problem follows:&lt;/p&gt;
 
 &lt;h2 id=&quot;summarizing-raw-data&quot;&gt;Summarizing Raw Data&lt;/h2&gt;
 
@@ -68,64 +66,64 @@
   &lt;/thead&gt;
   &lt;tbody&gt;
     &lt;tr&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;/fighter/Kevin-Zalac-37937&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;/fighter/Jon-Hill-38397&lt;/td&gt;
+      &lt;td style=&quot;text-align: right&quot;&gt;0&lt;/td&gt;
+      &lt;td style=&quot;text-align: right&quot;&gt;10&lt;/td&gt;
       &lt;td style=&quot;text-align: right&quot;&gt;2&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;/fighter/Povilas-Markevicius-4340&lt;/td&gt;
+      &lt;td style=&quot;text-align: right&quot;&gt;1&lt;/td&gt;
+      &lt;td style=&quot;text-align: right&quot;&gt;0&lt;/td&gt;
       &lt;td style=&quot;text-align: right&quot;&gt;4&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;/fighter/Jarrett-Wainohu-62716&lt;/td&gt;
+      &lt;td style=&quot;text-align: right&quot;&gt;1&lt;/td&gt;
+      &lt;td style=&quot;text-align: right&quot;&gt;1&lt;/td&gt;
+      &lt;td style=&quot;text-align: right&quot;&gt;2&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;/fighter/Niko-Lohmann-43694&lt;/td&gt;
+      &lt;td style=&quot;text-align: right&quot;&gt;0&lt;/td&gt;
+      &lt;td style=&quot;text-align: right&quot;&gt;1&lt;/td&gt;
+      &lt;td style=&quot;text-align: right&quot;&gt;5&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;/fighter/Yuichiro-Yajima-12923&lt;/td&gt;
+      &lt;td style=&quot;text-align: right&quot;&gt;0&lt;/td&gt;
+      &lt;td style=&quot;text-align: right&quot;&gt;2&lt;/td&gt;
+      &lt;td style=&quot;text-align: right&quot;&gt;17&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;/fighter/Glauber-Duncan-Santiago-174139&lt;/td&gt;
+      &lt;td style=&quot;text-align: right&quot;&gt;2&lt;/td&gt;
+      &lt;td style=&quot;text-align: right&quot;&gt;0&lt;/td&gt;
+      &lt;td style=&quot;text-align: right&quot;&gt;2&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;/fighter/Josh-Tyler-73391&lt;/td&gt;
+      &lt;td style=&quot;text-align: right&quot;&gt;2&lt;/td&gt;
+      &lt;td style=&quot;text-align: right&quot;&gt;1&lt;/td&gt;
       &lt;td style=&quot;text-align: right&quot;&gt;4&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;/fighter/Micol-DiSegni-171627&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;4&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;0&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;1&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;/fighter/William-Kassulker-61219&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;0&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;1&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;3&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;/fighter/Denis-Silva-159537&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;/fighter/Petr-Vacek-85491&lt;/td&gt;
       &lt;td style=&quot;text-align: right&quot;&gt;2&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;3&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;2&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;/fighter/Enrique-Diarte-101923&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;0&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;3&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;1&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;/fighter/Juergen-Dolch-37794&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;1&lt;/td&gt;
       &lt;td style=&quot;text-align: right&quot;&gt;2&lt;/td&gt;
       &lt;td style=&quot;text-align: right&quot;&gt;1&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;/fighter/Gilcimar-de-Jesus-114099&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;/fighter/Mike-Marrello-17807&lt;/td&gt;
+      &lt;td style=&quot;text-align: right&quot;&gt;5&lt;/td&gt;
       &lt;td style=&quot;text-align: right&quot;&gt;1&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;4&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;0&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;/fighter/Isaac-Villanueva-41384&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;2&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;9&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;0&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;/fighter/Gi-Bum-Moon-139205&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;3&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;1&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;0&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;/fighter/Kassim-Annan-3159&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;0&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;2&lt;/td&gt;
       &lt;td style=&quot;text-align: right&quot;&gt;8&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;/fighter/Alfred-Khashakyan-133919&lt;/td&gt;
+      &lt;td style=&quot;text-align: right&quot;&gt;0&lt;/td&gt;
+      &lt;td style=&quot;text-align: right&quot;&gt;8&lt;/td&gt;
+      &lt;td style=&quot;text-align: right&quot;&gt;0&lt;/td&gt;
     &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
@@ -168,36 +166,38 @@
 
 &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ggtern&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dks_partition_counts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;aes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Dec&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;`KO/TKO`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;z&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Sub&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
   &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;geom_mask&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-  &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;geom_point&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;geom_point&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1.2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
   &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;facet_wrap&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;~&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ncol&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
   &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;scale_color_continuous&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Number of fighters\nwith value&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;low&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;royalblue1&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;high&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;red&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;trans&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;log10&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
   &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;suppressWarnings&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;limit_tern&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1.05&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1.05&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1.05&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-  &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;theme&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;element_text&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;m&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+  &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;theme&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;element_text&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;m&quot;&gt;22&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;&lt;img src=&quot;/figure/source/2016-12-20-rankingMethods/unnamed-chunk-2-1.png&quot; title=&quot;plot of chunk unnamed-chunk-2&quot; alt=&quot;plot of chunk unnamed-chunk-2&quot; style=&quot;display: block; margin: auto;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;There are only a small number of distinct combinations of methods that an inexperienced fighters could have won by (\(3^{n}\)). Accordingly, many fighters have either exclusively won by a single method or have won by only two of the three possible methods. Transitioning to more experienced fighters, most fighters have a method proportion that is not on the boundary of the ternary diagram. For these experienced fighters, observed method proportions should be a fairly accurate estimate of a fighter’s future win methods. That is, observed method proportions accurately estimate \(\Pr(\text{Method|Fighter})\). The method proportions of inexperienced fighters are more dubious predictors of this quantity because they overfit to observed win methods, thereby discounting that considerable uncertainty about these fighters exists.&lt;/p&gt;
 
-&lt;p&gt;To allow for fair estimation of fighters’ method preferences (\(\Pr(\text{Method|Fighter})\)) without regard to their level of experience, we can balance fighter-specific data with broader trends across fighters by estimating the distribution of methods \(\Pr(\text{Method}\) and utilizing this as a prior on the fighter-specific estimates. This prior will encompass both how common each method is and the extent to which fighters are method specialists (residing near the corners of the ternary diagram) or generalists (residing near the center of the ternary diagram).&lt;/p&gt;
+&lt;p&gt;To allow for fair estimation of fighters’ method preferences (\(\Pr(\text{Method|Fighter})\)) without regard to their level of experience, we can balance fighter-specific data with broader trends across fighters by estimating the distribution of methods (\(\Pr(\text{Method})\)) and utilizing this as a prior on the fighter-specific estimates. This prior will encompass both how common each method is and the extent to which fighters are method specialists (residing near the corners of the ternary diagram) or generalists (residing near the center of the ternary diagram).&lt;/p&gt;
 
 &lt;h2 id=&quot;sharing-information-across-fighters-using-a-hierarchical-model&quot;&gt;Sharing information across fighters using a hierarchical model&lt;/h2&gt;
 
 &lt;p&gt;Fighters’ win methods can be summarized by the \(I \times K\) matrix \(\mathbf{N}\) containing counts of each win method (\(k \in 1, 2, 3\)) by each fighter (\(i \in 1, 2, …, I\)). These counts can be thought of as drawn from fighter-specific Multinomial distributions parameterized by \(\theta_{i.}\). The Multinomial distribution is frequently used to represent data like dice rolls, but we generally don’t assume that each side is equally prevalent; instead, we are interested in estimating side probabilities. Due to the nature of this data, \(\theta\)s sum to 1 across the \(K = 3\) categories for each fighter \(i\), and \(\theta_{ik}\) equals the expected probability of the \(k\)th method for the \(i\)th fighter. In order to share information across fighters, we assume that these fighter-specific proportions are drawn from a single prior distribution. (This is why it’s called a hierarchical model.) A logical prior to place on the multinomially distributed fighter data is a Dirichlet distribution. Because the Dirichlet distribution is a conjugate prior to the Multinomial, the distributions can be cleanly combined to generate a closed form solution for the posterior (which will be the same distribution as the prior).&lt;/p&gt;
 
-&lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;n_{i.} \sim \text{Multi}(\theta_{i.}, \sum{n.})\\
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;n_{i.} \sim \text{Multi}(\theta_{i.}, \sum{n_{i.}})\\
 \theta_{i.} \sim \text{Dir}(\alpha_{1}, \alpha_{2}, \alpha_{3})&lt;/script&gt;
-This hierarchical Dirichlet-Multinomial relationship combines the Multinomial, which behaves similar to the ternary summary above, with the Dirichlet which will add pseudocounts of \(\alpha_{k}\) to the \(n_{ik}\) of each fighter \(i\). Adding the \(\alpha\) pseudocounts to an inexperienced fighter will shrink their estimated \(\Pr(\text{Method|Fighter})\) towards the overall frequency of methods, while this addition will not greatly impact an experienced fighter with a large amount of data.&lt;/p&gt;
 
-&lt;p&gt;To further clarify how the Multinomial and Dirichlet will work together, we can consider that the Dirichlet-Multinomial distribution is a generalization of the Beta-Binomial to an arbitrary number of categories, \(K\). The Beta-Binomial distribution considers just two categories, like with a coin flip. For a good resource on this distribution, Dave Robinson has nicely explained the importance of applying a Beta prior on Binomial baseball batting data (hits/total pitches) on &lt;a href=&quot;http://varianceexplained.org/r/empirical_bayes_baseball/&quot;&gt;his blog&lt;/a&gt;. As another example of Beta-Binomial, we can consider estimating a coin’s \(\Pr(\text{heads})\). If we flip a single coin 20 times and obtain 15 heads and 5 tails, the observed \(\Pr(\text{heads})\) is pretty far from the fair expectation (i.e. \(\Pr(\text{heads}) = 0.5\)). But, we should also assume that most coins are fair unless the data strongly overrules our assumption. Because of our strong prior assumptions regarding the behavior of coins, we should put a Beta prior on \(\Pr(\text{heads|flips})\) with fairly big parameters (lets say that its parameters \(\alpha\) and \(\beta\), which are equivalent to the \(\alpha\) parameters in the Dirichlet-Multinomial, are each 10). Because of the form of the Beta-Binomial, when we combine the prior and posterior, our posterior estimate of \(\Pr(\text{heads|flips})\) will have an expectation of \(\frac{H + \alpha}{H + \alpha + T + \beta} = \frac{15 + 10}{15 + 10 + 5 + 10} = 0.625\). Thus, we have shrunken our small amount of data on a single coin towards the behavior of coins overall.&lt;/p&gt;
+&lt;p&gt;This hierarchical Dirichlet-Multinomial relationship combines the Multinomial, which behaves like rolling a weighted \(K\) sided die, with the Dirichlet which adds $\alpha_{k}$ pseudocounts to each fighter’s record’s count of that method. Adding the \(\alpha\) pseudocounts to an inexperienced fighter will shrink their estimated \(\Pr(\text{Method|Fighter})\) towards the overall frequency of methods, while this addition will not greatly impact an experienced fighter with a large amount of data.&lt;/p&gt;
 
-&lt;p&gt;One of the cool things about conjugate distributions like the Beta-Binomial and Dirichlet-Multinomial is that we can cleanly combine the prior and likelihood (of data, having assumed parameters), updating our prior belief based upon data. So, if we had some strong belief about the values of $\alpha$, then we could update our estimate of \(\Pr(\text{Method|Fighter})\), encompassing this prior belief (the form of this update will be very similar to the coin example). Another cool property of the Dirichlet-Multinomial is that if we do not know the \(\alpha\)s values and instead want to estimate these prior hyperparameters, we can integrate over fighter’s \(\theta\)s so that we can directly relate the support for our observed data (\(N\)) given the hyperparameters on our prior (\(\alpha\)s).&lt;/p&gt;
+&lt;p&gt;To further clarify how the Multinomial and Dirichlet will work together, we can consider that the Dirichlet-Multinomial distribution is a generalization of the Beta-Binomial from two categories (e.g. yes and no) to an arbitrary number of categories, \(K\). For a good resource on this distribution, Dave Robinson has nicely explained the importance of applying a Beta prior on Binomial baseball batting data (hits/total pitches) on &lt;a href=&quot;http://varianceexplained.org/r/empirical_bayes_baseball/&quot;&gt;his blog&lt;/a&gt;. As another example of Beta-Binomial, we can consider estimating a coin’s \(\Pr(\text{heads})\). If we flip a single coin 20 times and obtain 15 heads and 5 tails, the observed \(\Pr(\text{heads})\) is pretty far from the fair expectation (i.e. \(\Pr(\text{heads}) = 0.5\)). But, we should also assume that most coins are fair unless the data strongly overrules our assumption. Because of our strong prior assumptions regarding the behavior of coins, we should put a Beta prior on \(\Pr(\text{heads|flips})\) with fairly big parameters (lets say that its parameters \(\alpha\) and \(\beta\), which are equivalent to the \(\alpha\) parameters in the Dirichlet-Multinomial, are each 10). Because of the form of the Beta-Binomial, when we combine the prior and posterior, our posterior estimate of \(\Pr(\text{heads|flips})\) will have an expectation of \(\frac{H + \alpha}{H + \alpha + T + \beta} = \frac{15 + 10}{15 + 10 + 5 + 10} = 0.625\). Thus, we have shrunken our small amount of data on a single coin towards the behavior of coins overall.&lt;/p&gt;
 
-&lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;\Pr(\mathbf{N}|\mathbf{\alpha}) = \int_{\Theta}\Pr(\mathbf{N}|\Theta)Pr(\Theta|\mathbf{\alpha})d\Theta\\
+&lt;p&gt;One of the cool things about conjugate distributions like the Beta-Binomial and Dirichlet-Multinomial is that we can cleanly combine the prior and likelihood (of data, having assumed parameters), updating our prior belief based upon data. So, if we had some strong belief about the values of \(\alpha\), then we could update our estimate of \(\Pr(\text{Method|Fighter})\), encompassing this prior belief (the form of this update will be very similar to the coin example). Another cool property of the Dirichlet-Multinomial is that if we do not know the \(\alpha\) values and instead want to estimate these prior hyperparameters, we can integrate over fighter’s \(\theta\)s so that we can directly relate the support for our observed data (\(N\)) given the hyperparameters on our prior (\(\alpha\)s).&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\Pr(\mathbf{N}|\mathbf{\alpha}) = \int_{\Theta}\Pr(\mathbf{N}|\Theta)Pr(\Theta|\mathbf{\alpha})d\Theta\\
 \Pr(\mathbf{N}|\mathbf{\alpha}) = \prod_{i}\frac{\Gamma(A)}{\Gamma(N_{i} + A)}\prod_{k=1}^{K}\frac{\Gamma(n_{ik} + \alpha_{k})}{\Gamma(\alpha_{k})}\\
 \log(\Pr(\mathbf{N}|\mathbf{\alpha})) = \sum_{i}\left[\log(\Gamma(A)) - \log(\Gamma(N_{i} + A)) + \sum_{k=1}^{K}\left[\log(\Gamma(n_{ik} + \alpha_{k})) - \log(\Gamma(\alpha_{k}))\right]\right]\\
 \log(\Pr(\mathbf{N}|\mathbf{\alpha})) = I\left[\log(\Gamma(A)) -\sum_{k=1}^{K}\log(\Gamma(\alpha_{k}))\right] +
 \sum_{i}\left[- \log(\Gamma(N_{i} + A)) + \sum_{k=1}^{K}\log(\Gamma(n_{ik} + \alpha_{k}))\right]&lt;/script&gt;
-Here, \(A = \sum_{k}^{K}\alpha\) and \(N_{i} = \sum_{k}^{K}n_{ik}\). The second step is a known property of the Dirichlet-Multinomial. The third step log-transforms the marginal joint probability such that individual terms in the expression can be separately calculated without worrying about the product numerically rounding to zero. The fourth step refactors the summation so that it can be easily calculated during optimization. From this final expression, it is straightforward to determine the overall probability of our dataset for a given set of $\alpha$ parameters. To instead determine optimal \(\alpha\) values given the dataset (the inverse problem), different sets of \(\alpha\) values can be proposed and evalutated using Markov Chain Monte Carlo (MCMC) in order to hone in on values of \(\alpha\) that best agree with our observed data.&lt;/p&gt;
+
+&lt;p&gt;Here, \(A = \sum_{k}^{K}\alpha\) and \(N_{i} = \sum_{k}^{K}n_{ik}\). The second step is a known property of the Dirichlet-Multinomial. The third step log-transforms the marginal joint probability such that individual terms in the expression can be separately calculated without worrying about the product numerically rounding to zero. The fourth step refactors the summation so that it can be easily calculated during optimization. From this final expression, it is straightforward to determine the overall probability of our dataset for a given set of \(\alpha\) parameters. To instead determine optimal \(\alpha\) values given the dataset (the inverse problem), different sets of \(\alpha\) values can be proposed and evalutated using Markov Chain Monte Carlo (MCMC) in order to hone in on values of \(\alpha\) that best agree with our observed data.&lt;/p&gt;
 
 &lt;h2 id=&quot;solving-for-prior-parameters-using-mcmc&quot;&gt;Solving for prior parameters using MCMC&lt;/h2&gt;
 
@@ -234,7 +234,7 @@ Here, \(A = \sum_{k}^{K}\alpha\) and \(N_{i} = \sum_{k}^{K}n_{ik}\). The second 
   &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dplyr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mutate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;alpha&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rgamma&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;shape&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gamma_shape&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rate&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gamma_rate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
 &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;current_logLik&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;multi_dirich_logLik&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fighter_total_counts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fighter_method_counts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;alphas_current&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
 
-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n_steps&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;m&quot;&gt;5000&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n_steps&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;m&quot;&gt;4000&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
 
 &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;logLik_track&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;rep&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;NA&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;floor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n_steps&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
 &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;alpha_track&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
@@ -288,48 +288,40 @@ Here, \(A = \sum_{k}^{K}\alpha\) and \(N_{i} = \sum_{k}^{K}n_{ik}\). The second 
       &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dplyr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;select&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
     &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;by&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Method&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
 
-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;knitr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;kable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;method_breakdown&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;digits&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;m&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;knitr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;kable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;method_breakdown&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&amp;gt;%&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dplyr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;select&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Method&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;`Method Proportion`&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Method_fraction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;alpha&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;`alpha Proportion`&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;alpha_frac&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;digits&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;m&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;table&gt;
   &lt;thead&gt;
     &lt;tr&gt;
       &lt;th style=&quot;text-align: left&quot;&gt;Method&lt;/th&gt;
+      &lt;th style=&quot;text-align: right&quot;&gt;Method Proportion&lt;/th&gt;
       &lt;th style=&quot;text-align: right&quot;&gt;alpha&lt;/th&gt;
-      &lt;th style=&quot;text-align: right&quot;&gt;sample&lt;/th&gt;
-      &lt;th style=&quot;text-align: right&quot;&gt;logLik&lt;/th&gt;
-      &lt;th style=&quot;text-align: right&quot;&gt;alpha_frac&lt;/th&gt;
-      &lt;th style=&quot;text-align: right&quot;&gt;Method_fraction&lt;/th&gt;
+      &lt;th style=&quot;text-align: right&quot;&gt;alpha Proportion&lt;/th&gt;
     &lt;/tr&gt;
   &lt;/thead&gt;
   &lt;tbody&gt;
     &lt;tr&gt;
       &lt;td style=&quot;text-align: left&quot;&gt;Decision&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;1.275&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;63&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;-158636.4&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;0.262&lt;/td&gt;
       &lt;td style=&quot;text-align: right&quot;&gt;0.234&lt;/td&gt;
+      &lt;td style=&quot;text-align: right&quot;&gt;1.273&lt;/td&gt;
+      &lt;td style=&quot;text-align: right&quot;&gt;0.261&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td style=&quot;text-align: left&quot;&gt;KO/TKO&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;1.620&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;63&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;-158636.4&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;0.332&lt;/td&gt;
       &lt;td style=&quot;text-align: right&quot;&gt;0.334&lt;/td&gt;
+      &lt;td style=&quot;text-align: right&quot;&gt;1.617&lt;/td&gt;
+      &lt;td style=&quot;text-align: right&quot;&gt;0.332&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td style=&quot;text-align: left&quot;&gt;Submission&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;1.977&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;63&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;-158636.4&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;0.406&lt;/td&gt;
       &lt;td style=&quot;text-align: right&quot;&gt;0.432&lt;/td&gt;
+      &lt;td style=&quot;text-align: right&quot;&gt;1.979&lt;/td&gt;
+      &lt;td style=&quot;text-align: right&quot;&gt;0.406&lt;/td&gt;
     &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
 
-&lt;p&gt;Using MCMC I generated a distribution of \(\alpha\) parameter sets. From these samples, for the sake of convenience, I chose the MAP (the maximum posterior probability) estimate as a single consensus set of \(\alpha\) values. Inspecting the values of the MAP \(\alpha\)s, \(\alpha_{k}/\sum \alpha\) values are similar to \(\frac{\sum_{i}n_{ik}}{\sum_{ik}n_{ik}}\). This reveals that our prior has a similar shape to the popularity of individual methods, thereby adding weights of method to a fighter’s record based on the frequency of this method overall. The total magnitude of these \(\alpha\)s, 5, indicates how many total fights are effectively added to each fighter’s career.&lt;/p&gt;
+&lt;p&gt;Using MCMC I generated a distribution of \(\mathbf{\alpha}\) parameter sets. From these samples, for the sake of convenience, I chose the MAP (the maximum posterior probability) estimate as a single consensus set of \(\alpha\) values. Inspecting the values of the MAP \(\alpha\)s, \(\alpha_{k}/\sum \alpha\) values are similar to \(\frac{\sum_{i}n_{ik}}{\sum_{ik}n_{ik}}\). This reveals that our prior has a similar shape to the popularity of individual methods, thereby adding weights of method to a fighter’s record based on the frequency of this method overall. The total magnitude of these \(\alpha\)s, 4.87, indicates how many total fights are effectively added to each fighter’s career.&lt;/p&gt;
 
 &lt;h3 id=&quot;estimating-prtextmethodfighter&quot;&gt;Estimating \(\Pr(\text{Method|Fighter})\)&lt;/h3&gt;
 
@@ -388,6 +380,7 @@ Here, \(A = \sum_{k}^{K}\alpha\) and \(N_{i} = \sum_{k}^{K}n_{ik}\). The second 
         &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;panel.grid.major&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;element_blank&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
         &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;panel.grid.minor&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;element_blank&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
         &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;panel.grid.major.x&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;element_line&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0.5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;gray70&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;axis.ticks.x&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;element_line&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0.5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;gray70&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
         &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;strip.text&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;element_text&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;m&quot;&gt;24&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
         &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;element_text&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;m&quot;&gt;24&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
         &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;axis.text.y&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;element_blank&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
@@ -437,11 +430,11 @@ Here, \(A = \sum_{k}^{K}\alpha\) and \(N_{i} = \sum_{k}^{K}n_{ik}\). The second 
   &lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;# background Pr distribution
 &lt;/span&gt;&lt;span class=&quot;w&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;geom_point_swap&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;aes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fill&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Pr_method&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
   &lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;# Pr(method) for individual fighters
-&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;geom_point&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;method_breakdown_summary&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;aes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0.3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;geom_point&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;method_breakdown_summary&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;aes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
   &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;scale_fill_gradientn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Pr(Method)&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;colors&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;gray90&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;orange&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;red&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
   &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;facet_wrap&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;~&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ncol&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
   &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;scale_color_continuous&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Number of fighters\nwith value&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;low&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;darkslategray1&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;high&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;royalblue1&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;trans&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;log10&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-  &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;theme&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;element_text&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;m&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+  &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;theme&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;element_text&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;m&quot;&gt;22&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;&lt;img src=&quot;/figure/source/2016-12-20-rankingMethods/unnamed-chunk-3-1.png&quot; title=&quot;plot of chunk unnamed-chunk-3&quot; alt=&quot;plot of chunk unnamed-chunk-3&quot; style=&quot;display: block; margin: auto;&quot; /&gt;&lt;/p&gt;
 
