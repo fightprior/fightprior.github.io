@@ -7,8 +7,8 @@ permalink:           pretty
 title:               Fight Prior
 tagline:             'MMA Data Science and Statistical Analysis'
 description:         '<img src="https://raw.githubusercontent.com/fightprior/fightprior.github.io/master/public/fightprior_logo.png" height=45 </img>  Follow us on twitter <a href="https://twitter.com/Fight_Prior">@Fight_Prior</a>'
-url:                 'http://www.fightprior.com'
-#url:                 'http://127.0.0.1:4000'
+#url:                 'http://www.fightprior.com'
+url:                 'http://127.0.0.1:4000'
 paginate:            5
 gems:                [jekyll-paginate]
 excerpt_separator:   <!--more-->

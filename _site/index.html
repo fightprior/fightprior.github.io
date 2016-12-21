@@ -109,7 +109,27 @@
   
   <div class="post">
     <h2 class="post-title">
-      <a href="http://www.fightprior.com/2016/09/29/finishCooccurrence/">
+      <a href="http://127.0.0.1:4000/2016/12/20/rankingMethods/">
+        MMA styles II: ranking the top striking, submission and decision specialists
+      </a>
+    </h2>
+
+    <span class="post-date">20 Dec 2016</span>
+    <p>Ranking athletes is a common problem across all sports. In Mixed Martial Arts (MMA), one of the most popular ways of summarizing fighters is based on their primary method of winning. The major winning methods are: (1) TKO/KO: a fighter uses punches, kicks, etc. to either incapacitate the opponent (KO) or force a stoppage (TKO), (2) Submission: through chokes or joint locks a fighter forces his/her opponent to tap out, (3) Decision: the fight goes its full length and a panel of judges declare the winner.</p>
+
+<p>The relative value of these three win methods is an important summary of a fighter’s style which is both reported by <a href="http://www.ufc.com/schedule/event">UFC’s pre-fight summary</a> and is one of <a href="http://www.sherdog.com/fighter/Andrei-Arlovski-270">Sherdog’s main summaries of a fighter</a>. Despite the importance of win method preference for summarizing fighters, it is difficult to rank fighters by their method preferences (the % of all wins by each method); using this metric, amateur fighters (with few wins to date) will often appear to be more specialized than experienced fighters. For example, a fighter who has won 3/3 times using strikes would appear to exclusively win by striking, while a fighter with 49/50 wins by striking would seem less specialized. Clearly, the latter fighter is probably a stronger striker because he/she has repeatedly demonstrated this preference, whereas there is more uncertainty about the former fighter.</p>
+
+<p>Here, I formalize this intuition by balancing fighter-specific results with patterns across fighters using a statistical approach based on empirical Bayesian analysis: a hierarchical Dirichlet-Multinomial model. Using this approach, I can fairly rank fighters accounting for their variable experience. Based on these experience-corrected rankings, Conor McGregor and Cris Cyborg are among the top 10 striking specialists in the UFC. Overall, the fighter who most reliably wins by KO/TKO is K1 veteran Melvin Manhoef. Ronda Rousey and Dominick Cruz are top 10 in the UFC for winning by submission and decision, respectively.</p>
+
+<p><img src="http://127.0.0.1:4000/figure/source/2016-12-20-rankingMethods/method_table-1.png" alt="Fighter Win Method Rankings" class="align-center" /></p>
+
+
+    <a href="http://127.0.0.1:4000/2016/12/20/rankingMethods/">Click here to continue reading...</a>
+  </div>
+  
+  <div class="post">
+    <h2 class="post-title">
+      <a href="http://127.0.0.1:4000/2016/09/29/finishCooccurrence/">
         MMA styles I: grouping finishes using large-scale data
       </a>
     </h2>
@@ -119,15 +139,15 @@
 
 <p>A useful way of understanding the styles of fighters is if we (1) determine the styles of individual fighters and, (2) understand the set of techniques that an individual style entails. To investigate the latter question, rather than assuming that the grouping of techniques was known (such as heel hooks and triangle chokes contributing to a BJJ game), I determined whether such groupings could naturally emerge based on how frequently finishes have been used by the same fighters (i.e. do fighters who win with armbars tend to win with triangle chokes?)</p>
 
-<p>Using data from ~120,000 wins across 35,000 fighters, I determined how frequently each pair of <a href="http://www.fightprior.com/2016/05/05/summarizingFights/">50 common finishes</a> was used by the same fighters relative to chance, allowing me to identify ~300 pairs of finishes that are commonly used together by fighters. These finish pairs can be used to more broadly organize finishes, grouping finishes that share similar partners.</p>
+<p>Using data from ~120,000 wins across 35,000 fighters, I determined how frequently each pair of <a href="http://127.0.0.1:4000/2016/05/05/summarizingFights/">50 common finishes</a> was used by the same fighters relative to chance, allowing me to identify ~300 pairs of finishes that are commonly used together by fighters. These finish pairs can be used to more broadly organize finishes, grouping finishes that share similar partners.</p>
 
 
-    <a href="http://www.fightprior.com/2016/09/29/finishCooccurrence/">Click here to continue reading...</a>
+    <a href="http://127.0.0.1:4000/2016/09/29/finishCooccurrence/">Click here to continue reading...</a>
   </div>
   
   <div class="post">
     <h2 class="post-title">
-      <a href="http://www.fightprior.com/2016/08/23/Win_loss_markov/">
+      <a href="http://127.0.0.1:4000/2016/08/23/Win_loss_markov/">
         In MMA winners keep winning and losers keep losing
       </a>
     </h2>
@@ -138,12 +158,12 @@
 <p>In this post, I address one aspect of momentum in MMA: how a fighter’s performance in one fight affects their performance in their next fight. Summarizing the careers of over 150,000 fighters, I see that wins at any stage of a fighter’s career are an indicator of future success, while early losses are often enough to force a fighter to rethink their MMA dreams.</p>
 
 
-    <a href="http://www.fightprior.com/2016/08/23/Win_loss_markov/">Click here to continue reading...</a>
+    <a href="http://127.0.0.1:4000/2016/08/23/Win_loss_markov/">Click here to continue reading...</a>
   </div>
   
   <div class="post">
     <h2 class="post-title">
-      <a href="http://www.fightprior.com/2016/08/11/Building_mySQL_fight_db/">
+      <a href="http://127.0.0.1:4000/2016/08/11/Building_mySQL_fight_db/">
         Building a large database of MMA fight results IV: turning tables into a database with R and SQL
       </a>
     </h2>
@@ -152,20 +172,20 @@
     <p>Previously, I discussed acquiring and standardizing a compendium of fighter and fight-level MMA results.</p>
 
 <ul>
-  <li><a href="http://www.fightprior.com/2016/04/29/scrapingMMA/">I: Scraping fighter and fight data</a>: Aggregating data from ~250,000 MMA fights between ~140,000 fighters.</li>
-  <li><a href="http://www.fightprior.com/2016/05/05/summarizingFights/">II: Cleaning up fight-level data</a>: summarizing the major ways that fights are won.</li>
-  <li><a href="http://www.fightprior.com/2016/05/13/summarizingFighters/">III: Cleaning up fighter-level data</a>: summarizing where fighters are from and major weight classes.</li>
+  <li><a href="http://127.0.0.1:4000/2016/04/29/scrapingMMA/">I: Scraping fighter and fight data</a>: Aggregating data from ~250,000 MMA fights between ~140,000 fighters.</li>
+  <li><a href="http://127.0.0.1:4000/2016/05/05/summarizingFights/">II: Cleaning up fight-level data</a>: summarizing the major ways that fights are won.</li>
+  <li><a href="http://127.0.0.1:4000/2016/05/13/summarizingFighters/">III: Cleaning up fighter-level data</a>: summarizing where fighters are from and major weight classes.</li>
 </ul>
 
 <p>In this post, I will go over how the previously created fight, fighter and event-level tables can be transformed into a MySQL database that can both be created and accessed using R.</p>
 
 
-    <a href="http://www.fightprior.com/2016/08/11/Building_mySQL_fight_db/">Click here to continue reading...</a>
+    <a href="http://127.0.0.1:4000/2016/08/11/Building_mySQL_fight_db/">Click here to continue reading...</a>
   </div>
   
   <div class="post">
     <h2 class="post-title">
-      <a href="http://www.fightprior.com/2016/05/17/smallWorldMMA/">
+      <a href="http://127.0.0.1:4000/2016/05/17/smallWorldMMA/">
         The not-so-small-world network of MMA fighters
       </a>
     </h2>
@@ -176,30 +196,14 @@
 <p>One way we can think about this question is that fighters will tend to compete against other fighters who are relatively similar to them. An amateur fighter may compete against fighters in his town and in neighboring towns. His opponents may do the same. While this fighter is unlikely to compete against fighters who live two towns over, he can still be said to be relatively closely connected to these fighters because they are only two jumps aways. At a broader scale, MMA fighters who are very different may be many jumps apart, seperated by large geographical barriers or other obstructions.</p>
 
 
-    <a href="http://www.fightprior.com/2016/05/17/smallWorldMMA/">Click here to continue reading...</a>
-  </div>
-  
-  <div class="post">
-    <h2 class="post-title">
-      <a href="http://www.fightprior.com/2016/05/13/summarizingFighters/">
-        Building a large database of MMA fight results III: summarizing the demographics of 140,000 MMA fighters
-      </a>
-    </h2>
-
-    <span class="post-date">13 May 2016</span>
-    <p>The essential units of analysis in MMA are the sport’s fighters and the bouts between them. In my <a href="http://www.fightprior.com/2016/05/05/summarizingFights/">previous post</a>, I discussed how to standardize match data so that the major categories of finishes could be easily visualized.</p>
-
-<p>In this entry, I will discuss how to clean-up fighter-level data. The main goal of this post will be to determine the factors that affect fighter matchups. For some fighters, our data contains useful demographics, while for other fighters, this information is missing. One goal of this post will be to infer missing demographic data based on fighters’ previous bouts. For example, if we don’t know where in the world a fighter lives, we can probably determine their location with good accuracy if all their fights have been against people from the same region.</p>
-
-
-    <a href="http://www.fightprior.com/2016/05/13/summarizingFighters/">Click here to continue reading...</a>
+    <a href="http://127.0.0.1:4000/2016/05/17/smallWorldMMA/">Click here to continue reading...</a>
   </div>
   
 </div>
 
 <div class="pagination">
   
-    <a class="pagination-item older" href="http://www.fightprior.com/page2">Older</a>
+    <a class="pagination-item older" href="http://127.0.0.1:4000/page2">Older</a>
   
   
     <span class="pagination-item newer">Newer</span>
