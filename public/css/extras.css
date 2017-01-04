@@ -60,10 +60,22 @@ button.accordion {
 button.accordion.hide {
     display: none;
 }
-    
-figure.highlight {
-    padding: 0 18px;
+
+.highlight {
+    margin 0px auto;
+    padding: 0px;
     background-color: white;
+}
+@media (min-width: 0em) {
+    .highlight {
+        margin: 0px;
+    }
+}
+@media (min-width: 38em) {
+    .highlight {
+        padding: 0 18px;
+        margin: 10px;
+    }
 }
 
 figure.highlight.hide {

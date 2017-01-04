@@ -80,13 +80,13 @@ knitr::kable(all_bjj_fields %>% dplyr::sample_n(5), row.names = F)
 
 
 
-|First Name |Last Name |Nickname          |Team       |Full_name     |Fighter_link                     |
-|:----------|:---------|:-----------------|:----------|:-------------|:--------------------------------|
-|Robson     |Gracie    |                  |           |Robson Gracie |http://www.bjjheroes.com/?p=3394 |
-|Ronaldo    |Souza     |Jacare            |           |Ronaldo Souza |http://www.bjjheroes.com/?p=117  |
-|Marco      |Barbosa   |Barba, Barbosinha |Barbosa    |Marco Barbosa |http://www.bjjheroes.com/?p=492  |
-|Lucas      |Leite     |                  |Checkmat   |Lucas Leite   |http://www.bjjheroes.com/?p=875  |
-|Robson     |Moura     |Robinho           |Nova Uniao |Robson Moura  |http://www.bjjheroes.com/?p=195  |
+|First Name  |Last Name |Nickname |Team             |Full_name            |Fighter_link                     |
+|:-----------|:---------|:--------|:----------------|:--------------------|:--------------------------------|
+|Alan        |Moraes    |         |Carlson Gracie   |Alan Moraes          |http://www.bjjheroes.com/?p=2583 |
+|Adilson     |Lima      |Bitta    |Academia Pitbull |Adilson Lima         |http://www.bjjheroes.com/?p=6768 |
+|Ricardo     |Rezende   |         |Fight Sports     |Ricardo Rezende      |http://www.bjjheroes.com/?p=4859 |
+|Marcos      |de Souza  |         |Bonsai           |Marcos de Souza      |http://www.bjjheroes.com/?p=1848 |
+|Maximiliano |Trombini  |         |Cia Paulista     |Maximiliano Trombini |http://www.bjjheroes.com/?p=872  |
 
 After identifying all of the pages of BJJ heroes, I programmatically followed each hero’s link and saved the lineage field from each hero.
 
@@ -130,13 +130,13 @@ knitr::kable(BJJ_lineages %>% dplyr::sample_n(5), row.names = F)
 
 
 
-|First.Name |Last.Name |Nickname |Team           |Full_name      |Fighter_link                     |Lineage                                                                                                                       |
-|:----------|:---------|:--------|:--------------|:--------------|:--------------------------------|:-----------------------------------------------------------------------------------------------------------------------------|
-|Yan        |Lucas     |Pica Pau |Gracie Barra   |Yan Lucas      |http://www.bjjheroes.com/?p=6432 |Lineage: Takeo Iano > Francisco Sá > Ricardo Pinho > Pirillo Roriz > Yan Lucas                                                |
-|Felicia    |Oh        |         |Machado JJ     |Felicia Oh     |http://www.bjjheroes.com/?p=5883 |Lineage: Mitsuyo Maeda > Carlos Gracie Sr. > Carlos Gracie Junior > Jean Jacques Machado > Felicia Oh                         |
-|Rufino     |Gomes     |Morcego  |Checkmat       |Rufino Gomes   |http://www.bjjheroes.com/?p=781  |Lineage: Mitsuyo Maeda > Carlos Gracie > Carlson Gracie > Ricardo De La Riva > Rodrigo Nogueira > Luiz Firmino > Rufino Gomes |
-|Ralph      |Gracie    |         |               |Ralph Gracie   |http://www.bjjheroes.com/?p=1781 |Lineage: Mitsuyo Maeda > Carlos Gracie Sr. > Helio Gracie > Carlos Gracie Junior > Ralph Gracie                               |
-|Rodrigo    |Pagani    |         |Gracie Humaita |Rodrigo Pagani |http://www.bjjheroes.com/?p=4993 |Lineage: Mitsuyo Maeda > Carlos Gracie > Helio Gracie > Royler Gracie > Saulo Ribeiro > Rodrigo Pagani                        |
+|First.Name   |Last.Name |Nickname |Team                 |Full_name           |Fighter_link                     |Lineage                                                                                                                                         |
+|:------------|:---------|:--------|:--------------------|:-------------------|:--------------------------------|:-----------------------------------------------------------------------------------------------------------------------------------------------|
+|Ana Carolina |Vieira    |         |GF Team              |Ana Carolina Vieira |http://www.bjjheroes.com/?p=6979 |Lineage: Mitsuyo Maeda > Luis França > Oswaldo Fadda > Monir Salomão > Julio Cesar > Ana Carolina Vieira                                        |
+|Kayron       |Gracie    |         |Gracie Barra         |Kayron Gracie       |http://www.bjjheroes.com/?p=901  |Lineage:  Mitsuyo Maeda > Carlos Gracie Sr. > Helio Gracie > Carlos Gracie Junior > Kayron Gracie                                               |
+|Marcus       |Bello     |         |GF Team              |Marcus Bello        |http://www.bjjheroes.com/?p=1619 |Lineage: Mitsuyo Maeda > Luis França > Oswaldo Fadda> Monir Salomão > Julio Cesar Pereira > Marcus Bello                                        |
+|Guilherme    |Augusto   |         |Alliance             |Guilherme Augusto   |http://www.bjjheroes.com/?p=5417 |Lineage: Mitsuyo Maeda > Carlos Gracie > George Gracie > Octávio de Almeida > Moises Murad > Everdan Olegário > Guilherme Augusto               |
+|Gary         |Tonon     |         |Renzo Gracie Academy |Gary Tonon          |http://www.bjjheroes.com/?p=5649 |Lineage: Mitsuyo Maeda > Carlos Gracie Sr. > Helio Gracie > Carlos Gracie Junior > Renzo Gracie > Ricardo Almeida (> Tom deBlass) > Garry Tonon |
 
 Each hero’s lineage is stored as a string, like "lineage: master’s master > master > student" (with some other variations), that contains the overall lineage of each hero. It is useful to think about these lineages as networks where direct connections between masters and their students are parent-child relationships. Links that span multiple parent-child links are termed ancestor-descendent relationships.
 
@@ -240,18 +240,18 @@ knitr::kable(master_student_relationships %>% dplyr::sample_n(10), row.names = F
 
 
 
-|Fighter_link                     |Master            |Student                      | Level|  n|
-|:--------------------------------|:-----------------|:----------------------------|-----:|--:|
-|http://www.bjjheroes.com/?p=6836 |Amal Easton       |John Combs                   |     6|  1|
-|http://www.bjjheroes.com/?p=2358 |Carlos Machado    |Klay Pittman                 |     5|  1|
-|http://www.bjjheroes.com/?p=537  |Waldomiro Perez   |Maximiliano Trombini         |     6|  1|
-|http://www.bjjheroes.com/?p=7399 |Andre Pederneiras |Jair Lourenço/Gustavo Dantas |     4|  1|
-|http://www.bjjheroes.com/?p=6368 |Jonatas Gurgel    |Kevin Mahecha                |     6|  1|
-|http://www.bjjheroes.com/?p=6246 |Carlos Gracie Jr  |Ailson Brites                |     4|  1|
-|http://www.bjjheroes.com/?p=4676 |Roberto Correa    |Renato Miragaia              |     4|  1|
-|http://www.bjjheroes.com/?p=6366 |João Roque        |Jonatas Gurgel               |     5|  3|
-|http://www.bjjheroes.com/?p=3357 |Roberto Traven    |Jose Mario Queiroga          |     6|  1|
-|http://www.bjjheroes.com/?p=2013 |Marcos Chuck      |Igor Rodrigues               |     7|  1|
+|Fighter_link                     |Master             |Student               | Level|  n|
+|:--------------------------------|:------------------|:---------------------|-----:|--:|
+|http://www.bjjheroes.com/?p=781  |Ricardo De La Riva |Rodrigo Nogueira      |     4|  1|
+|http://www.bjjheroes.com/?p=1577 |Leonardo Vieira    |Rafael Heck           |     6|  1|
+|http://www.bjjheroes.com/?p=1604 |Leonardo Vieira    |Nivaldo Oliveira      |     6|  1|
+|http://www.bjjheroes.com/?p=6046 |John Lewis         |Gazzy Parman          |     5|  1|
+|http://www.bjjheroes.com/?p=6064 |John Lewis         |Steve da Silva        |     5|  1|
+|http://www.bjjheroes.com/?p=4430 |Cesar Guimaraes    |Fabiano Gaudio        |     6|  2|
+|http://www.bjjheroes.com/?p=2560 |Leoni Nascimento   |Luiz Dias             |     4|  1|
+|http://www.bjjheroes.com/?p=2206 |Julio Lima         |Sandro Lima           |     5|  1|
+|http://www.bjjheroes.com/?p=1174 |Kazuo Yoshida      |Evaldo Luiz “Serrinha |     1|  1|
+|http://www.bjjheroes.com/?p=7077 |Wilson Mattos      |Manoel Costa          |     4|  1|
 
 Having aggregated all master-student relationships, I could move to visualizing the overlapping lineages of heroes; however, there are currently inconsistencies in the data that would muddy the results. This problem can be seen by looking at Mitsuyo Maeda, one of the founders of the sport who is an ancestor of almost all fighters in this dataset.
 
@@ -388,7 +388,8 @@ manual_renames <- tibble::frame_data(~old, ~new,
                                      "Luis Gustavo", "Luis Gustavo",
                                      "L. Irvin", "Lloyd Irvin",
                                      "João Miyao", "Joao Miyao",
-                                     "Tiago Barros", "Hiago George")
+                                     "Tiago Barros", "Hiago George",
+                                     "Jacare", "Romero Cavalcanti")
 
 # similar names of the root masters (heroes who do not have a master listed)
 agg_names <- combine_names(root_masters$Master, counts = root_masters$n, priority_names = all_bjj_fields$Full_name, overwrites = manual_renames)
@@ -503,7 +504,7 @@ knitr::kable(head(name_overwrites, 10), row.names = F)
 
 Since forming the original master-student relationships, I combined the names of some fighters and assigned each student to a single master. Because of the original lineage ambiguities, some masters may currently reside at multiple levels of our lineages. For example, Rickson Gracie is listed as a student of Carlos Gracie in some lineages and of Helio Gracie, in others. Because Helio is a student of Carlos, Rickson occurs on multiple lineage levels. In order to correct this problem, I releveled the lineage based on consensus master-student relationships so the lineages will form a proper hierarchy.
 
-Once this is done, I have a set of unambiguous 850 master-student relationships that will construct the BJJ family tree.
+Once this is done, I have a set of unambiguous 849 master-student relationships that will construct the BJJ family tree.
 
 
 {% highlight r %}
@@ -796,5 +797,5 @@ BJJ_tree <- BJJ_consensus_lineages %>%
 d3_bjj_tree <- networkD3::hierNetwork(BJJ_tree, type = "tree.radial",
                        zoomable = T, collapsible = T,
                        height = 2000, width = 2000, radius = 3, margin = 0)
-#networkD3::saveNetwork(d3_bjj_tree, file = "BJJfamilytree.html")
+networkD3::saveNetwork(d3_bjj_tree, file = "BJJfamilytree.html")
 {% endhighlight %}

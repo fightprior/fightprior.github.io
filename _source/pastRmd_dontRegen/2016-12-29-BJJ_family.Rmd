@@ -328,7 +328,8 @@ manual_renames <- tibble::frame_data(~old, ~new,
                                      "Luis Gustavo", "Luis Gustavo",
                                      "L. Irvin", "Lloyd Irvin",
                                      "João Miyao", "Joao Miyao",
-                                     "Tiago Barros", "Hiago George")
+                                     "Tiago Barros", "Hiago George",
+                                     "Jacare", "Romero Cavalcanti")
 
 # similar names of the root masters (heroes who do not have a master listed)
 agg_names <- combine_names(root_masters$Master, counts = root_masters$n, priority_names = all_bjj_fields$Full_name, overwrites = manual_renames)
@@ -708,5 +709,5 @@ BJJ_tree <- BJJ_consensus_lineages %>%
 d3_bjj_tree <- networkD3::hierNetwork(BJJ_tree, type = "tree.radial",
                        zoomable = T, collapsible = T,
                        height = 2000, width = 2000, radius = 3, margin = 0)
-#networkD3::saveNetwork(d3_bjj_tree, file = "BJJfamilytree.html")
+networkD3::saveNetwork(d3_bjj_tree, file = "BJJfamilytree.html")
 ```
